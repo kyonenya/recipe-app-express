@@ -2,6 +2,7 @@
   "name": "trial-express",
   "version": "1.0.0",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "pg": "^8.5.1"
   }
