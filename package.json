@@ -2,7 +2,8 @@
   "name": "trial-express",
   "version": "1.0.0",
   "scripts": {
-    "tsc": "tsc -w"
+    "tsc": "tsc -w",
+    "main.ts": "node ./dist/main.js"
   },
   "dependencies": {
     "@types/express": "^4.17.9",
