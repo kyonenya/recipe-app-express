@@ -1,8 +1,14 @@
 import express from 'express';
+import layouts from 'express-ejs-layouts';
 import * as homeController from './homeController';
 
 const app = express();
 app.set('port', process.env['WEB_APP_PORT'] || 3000);
+
+// enable ejs
+app
+  .set('view engine', 'ejs')
+  .use(layouts);
 
 // analyze request body
 app
@@ -11,8 +17,9 @@ app
 
 // route
 app
+  // .use(express.static('public'))
   .get('/', (req, res) => res.send('ようこそコンフェッティ・キュイジンへ'))
-  .get('/courses', (req, res) => homeController.render('courses', req, res))
+  .get('/courses', homeController.showCourses)
   .get('/contact', (req, res) => homeController.render('contact', req, res))
   .post('/contact', (req, res) => homeController.render('thanks', req, res))
 

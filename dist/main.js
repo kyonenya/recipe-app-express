@@ -23,17 +23,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const express_ejs_layouts_1 = __importDefault(require("express-ejs-layouts"));
 const homeController = __importStar(require("./homeController"));
 const app = express_1.default();
 app.set('port', process.env['WEB_APP_PORT'] || 3000);
+// enable ejs
+app
+    .set('view engine', 'ejs')
+    .use(express_ejs_layouts_1.default);
 // analyze request body
 app
     .use(express_1.default.urlencoded({ extended: false }))
     .use(express_1.default.json());
 // route
 app
+    // .use(express.static('public'))
     .get('/', (req, res) => res.send('ようこそコンフェッティ・キュイジンへ'))
-    .get('/courses', (req, res) => homeController.render('courses', req, res))
+    .get('/courses', homeController.showCourses)
     .get('/contact', (req, res) => homeController.render('contact', req, res))
     .post('/contact', (req, res) => homeController.render('thanks', req, res));
 app.listen(app.get('port'), () => console.log(`listening... port: ${app.get('port')}`));

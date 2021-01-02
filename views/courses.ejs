@@ -1,0 +1,6 @@
+<h1>Our courses</h1>
+<%# loop the templates %>
+<% offeredCourses.forEach(course => { %>
+  <h5><%= course.title %></h5>
+  <span>$ <%= course.cost%></span>
+<% }); %>
