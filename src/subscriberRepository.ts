@@ -6,30 +6,22 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false },
 });
 
-const getAllContacts = async () => {
-  const client = await pool.connect();
-  try {
-    const response = await client.query('SELECT * FROM contacts');
-    console.log(response['rows']);
-  } catch (err) {
-    console.error(err)
-  } finally {
-    client.release();
-  }
+export const getAllSubscribers = async (): Promise<any> => {
+  const query = 'SELECT * FROM contacts';
+  const response = await pool.query(query);
+  // console.log(response['rows']);
+  return response;
 };
 
 const insertOne = async () => {
-  const client = await pool.connect();
-  try {
-    const response = await client.query("INSERT INTO contacts (name, email, zipcode) VALUES ('Freddie Mercury', 'fred@queen.com', 0000000);");
-    console.log(response['rows']);
-  } catch (err) {
-    console.error(err)
-  } finally {
-    client.release();
+  const query = {
+    text: "INSERT INTO contacts (name, email, zipcode) VALUES ($1, $2, $3);",
+    values: ['Freddie Mercury', 'fred@queen.com', 1234567],
   }
+  const response = await pool.query(query);
+  console.log(response['rows']);
 };
 
-//insertOne();
+// insertOne();
 
-getAllContacts();
+getAllSubscribers();

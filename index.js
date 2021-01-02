@@ -7,15 +7,18 @@ const pool = new Pool({
 });
 
 const index = async () => {
-  try {
+//  try {
     const client = await pool.connect();
     const response = await client.query('SELECT * FROM manuscripts ORDER BY modifieddate DESC LIMIT $1;', [3]);
     console.log(response['rows']);
-  } catch (err) {
-    console.error(err)
-  } finally {
-    client.release();
-  }
+    return response;
+//  } catch (err) {
+//    console.error(err)
+//  } finally {
+//    client.release();
+//  }
 };
 
-index();
+const logger = (data) => console.log(data);
+
+index().then(data => logger('finished'));

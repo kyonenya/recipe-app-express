@@ -1,6 +1,7 @@
 import express from 'express';
 import layouts from 'express-ejs-layouts';
 import * as homeController from './homeController';
+import * as subscribersController from './subscribersController';
 import * as errorController from './errorController';
 
 const app = express();
@@ -22,6 +23,7 @@ app
   .get('/', (req, res) => res.send('ようこそコンフェッティ・キュイジンへ'))
   .get('/courses', homeController.showCourses)
   .get('/contact', (req, res) => homeController.render('contact', req, res))
+  .get('/subscribers', subscribersController.getAllSubscribers)
   .post('/contact', (req, res) => homeController.render('thanks', req, res))
 
 // catch errors

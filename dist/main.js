@@ -25,6 +25,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const express_ejs_layouts_1 = __importDefault(require("express-ejs-layouts"));
 const homeController = __importStar(require("./homeController"));
+const subscribersController = __importStar(require("./subscribersController"));
 const errorController = __importStar(require("./errorController"));
 const app = express_1.default();
 app.set('port', process.env['WEB_APP_PORT'] || 3000);
@@ -42,6 +43,7 @@ app
     .get('/', (req, res) => res.send('ようこそコンフェッティ・キュイジンへ'))
     .get('/courses', homeController.showCourses)
     .get('/contact', (req, res) => homeController.render('contact', req, res))
+    .get('/subscribers', subscribersController.getAllSubscribers)
     .post('/contact', (req, res) => homeController.render('thanks', req, res));
 // catch errors
 app
