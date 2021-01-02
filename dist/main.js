@@ -25,6 +25,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const express_ejs_layouts_1 = __importDefault(require("express-ejs-layouts"));
 const homeController = __importStar(require("./homeController"));
+const errorController = __importStar(require("./errorController"));
 const app = express_1.default();
 app.set('port', process.env['WEB_APP_PORT'] || 3000);
 // enable ejs
@@ -37,9 +38,13 @@ app
     .use(express_1.default.json());
 // route
 app
-    // .use(express.static('public'))
+    .use(express_1.default.static('public'))
     .get('/', (req, res) => res.send('ようこそコンフェッティ・キュイジンへ'))
     .get('/courses', homeController.showCourses)
     .get('/contact', (req, res) => homeController.render('contact', req, res))
     .post('/contact', (req, res) => homeController.render('thanks', req, res));
+// catch errors
+app
+    .use(errorController.notFound)
+    .use(errorController.internalError);
 app.listen(app.get('port'), () => console.log(`listening... port: ${app.get('port')}`));
