@@ -6,3 +6,10 @@ export const getAllSubscribers = async (req: any, res: Response) => {
   console.log(subscribers.rows);
   res.render('subscribers', { subscribers: subscribers.rows })
 };
+
+export const saveSubscriber = async (req: Request, res: Response) => {
+  console.log(req.body);
+  const values = [req.body.name, req.body.email, req.body.zipcode];
+  const response = await repository.createSubscriber(values);
+  res.render('thanks');
+};

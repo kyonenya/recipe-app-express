@@ -43,8 +43,8 @@ app
     .get('/', (req, res) => res.send('ようこそコンフェッティ・キュイジンへ'))
     .get('/courses', homeController.showCourses)
     .get('/contact', (req, res) => homeController.render('contact', req, res))
-    .get('/subscribers', subscribersController.getAllSubscribers)
-    .post('/contact', (req, res) => homeController.render('thanks', req, res));
+    .post('/subscribe', subscribersController.saveSubscriber)
+    .get('/subscribers', subscribersController.getAllSubscribers);
 // catch errors
 app
     .use(errorController.notFound)

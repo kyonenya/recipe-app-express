@@ -13,15 +13,15 @@ export const getAllSubscribers = async (): Promise<any> => {
   return response;
 };
 
-const insertOne = async () => {
+export const createSubscriber = async (values: string[]) => {
   const query = {
     text: "INSERT INTO contacts (name, email, zipcode) VALUES ($1, $2, $3);",
-    values: ['Freddie Mercury', 'fred@queen.com', 1234567],
+    values,
   }
   const response = await pool.query(query);
-  console.log(response['rows']);
+  return response;
 };
 
 // insertOne();
 
-getAllSubscribers();
+// getAllSubscribers();

@@ -28,7 +28,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllSubscribers = void 0;
+exports.saveSubscriber = exports.getAllSubscribers = void 0;
 const repository = __importStar(require("./subscriberRepository"));
 const getAllSubscribers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const subscribers = yield repository.getAllSubscribers();
@@ -36,3 +36,10 @@ const getAllSubscribers = (req, res) => __awaiter(void 0, void 0, void 0, functi
     res.render('subscribers', { subscribers: subscribers.rows });
 });
 exports.getAllSubscribers = getAllSubscribers;
+const saveSubscriber = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.body);
+    const values = [req.body.name, req.body.email, req.body.zipcode];
+    const response = yield repository.createSubscriber(values);
+    res.render('thanks');
+});
+exports.saveSubscriber = saveSubscriber;
