@@ -16,8 +16,8 @@ const pool = new pg_1.Pool({
     ssl: { rejectUnauthorized: false },
 });
 const getAllContacts = () => __awaiter(void 0, void 0, void 0, function* () {
+    const client = yield pool.connect();
     try {
-        const client = yield pool.connect();
         const response = yield client.query('SELECT * FROM contacts');
         console.log(response['rows']);
     }
@@ -28,4 +28,18 @@ const getAllContacts = () => __awaiter(void 0, void 0, void 0, function* () {
         client.release();
     }
 });
+const insertOne = () => __awaiter(void 0, void 0, void 0, function* () {
+    const client = yield pool.connect();
+    try {
+        const response = yield client.query("INSERT INTO contacts (name, email, zipcode) VALUES ('Freddie Mercury', 'fred@queen.com', 0000000);");
+        console.log(response['rows']);
+    }
+    catch (err) {
+        console.error(err);
+    }
+    finally {
+        client.release();
+    }
+});
+//insertOne();
 getAllContacts();

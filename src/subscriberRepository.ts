@@ -7,8 +7,8 @@ const pool = new Pool({
 });
 
 const getAllContacts = async () => {
+  const client = await pool.connect();
   try {
-    const client = await pool.connect();
     const response = await client.query('SELECT * FROM contacts');
     console.log(response['rows']);
   } catch (err) {
@@ -17,5 +17,19 @@ const getAllContacts = async () => {
     client.release();
   }
 };
+
+const insertOne = async () => {
+  const client = await pool.connect();
+  try {
+    const response = await client.query("INSERT INTO contacts (name, email, zipcode) VALUES ('Freddie Mercury', 'fred@queen.com', 0000000);");
+    console.log(response['rows']);
+  } catch (err) {
+    console.error(err)
+  } finally {
+    client.release();
+  }
+};
+
+//insertOne();
 
 getAllContacts();
