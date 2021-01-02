@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "tsc": "tsc -w",
+    "subscriberRepository.ts": "node ./dist/subscriberRepository.js",
     "main.ts": "node ./dist/main.js"
   },
   "dependencies": {
