@@ -31,9 +31,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllSubscribers = void 0;
 const repository = __importStar(require("./subscriberRepository"));
 const getAllSubscribers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.status(200);
-    const data = yield repository.getAllSubscribers();
-    console.log(data);
-    res.send(data);
+    const subscribers = yield repository.getAllSubscribers();
+    console.log(subscribers.rows);
+    res.render('subscribers', { subscribers: subscribers.rows });
 });
 exports.getAllSubscribers = getAllSubscribers;
