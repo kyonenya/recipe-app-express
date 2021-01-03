@@ -4,8 +4,9 @@ import { subscriberable } from './subscriberEntity';
 import { Request, Response, NextFunction } from 'express';
 
 export const getAllSubscribers = async (req: any, res: Response) => {
-  const subscribers: subscriberable[] = await getAllSubscribersUseCase();
-  console.log('contoroller', subscribers);
+  const subscribers: subscriberable[] = await getAllSubscribersUseCase(
+    subscriberRepository.getAllSubscribers // DI、スイッチを渡す
+  );
   res.render('subscribers', { subscribers });
 };
 

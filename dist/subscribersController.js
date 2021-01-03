@@ -32,8 +32,8 @@ exports.saveSubscriber = exports.getAllSubscribers = void 0;
 const subscriberRepository = __importStar(require("./subscriberRepository"));
 const subscriberUseCase_1 = require("./subscriberUseCase");
 const getAllSubscribers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const subscribers = yield subscriberUseCase_1.getAllSubscribersUseCase();
-    console.log('contoroller', subscribers);
+    const subscribers = yield subscriberUseCase_1.getAllSubscribersUseCase(subscriberRepository.getAllSubscribers // DI、スイッチを渡す
+    );
     res.render('subscribers', { subscribers });
 });
 exports.getAllSubscribers = getAllSubscribers;
