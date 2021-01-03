@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { NextFunction } from 'express';
 import layouts from 'express-ejs-layouts';
 import * as homeController from './homeController';
 import * as subscribersController from './subscribersController';
@@ -16,6 +16,12 @@ app
 app
   .use(express.urlencoded({ extended: false }))
   .use(express.json());
+
+// async wrapper
+//const wrap = (fn: any) => (req: Request, res: Response, next: NextFunction) => {
+//  return fn(req, res, next)
+//    .catch(next);
+//}
 
 // route
 app

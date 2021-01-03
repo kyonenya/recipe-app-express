@@ -37,6 +37,11 @@ app
 app
     .use(express_1.default.urlencoded({ extended: false }))
     .use(express_1.default.json());
+// async wrapper
+//const wrap = (fn: any) => (req: Request, res: Response, next: NextFunction) => {
+//  return fn(req, res, next)
+//    .catch(next);
+//}
 // route
 app
     .use(express_1.default.static('public'))

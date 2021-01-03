@@ -42,13 +42,20 @@ const showAllSubscribers = (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.showAllSubscribers = showAllSubscribers;
-const storeSubscriber = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const validateStoreReqest = (reqBody) => {
+    if (!reqBody.name) {
+        throw new Error('名前は必須です');
+    }
+    return reqBody;
+};
+const storeSubscriber = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield subscriberUseCase.createOne(subscriberRepository.insertOne, req.body);
+        const response = yield subscriberUseCase.createOne(subscriberRepository.insertOne, validateStoreReqest(req.body));
         res.render('thanks');
     }
     catch (err) {
         console.error(err);
+        next(err);
     }
 });
 exports.storeSubscriber = storeSubscriber;

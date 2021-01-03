@@ -14,14 +14,22 @@ export const showAllSubscribers = async (req: Request, res: Response) => {
   }
 };
 
-export const storeSubscriber = async (req: Request, res: Response) => {
+const validateStoreReqest = (reqBody: Request['body']) => {
+  if (!reqBody.name) {
+    throw new Error('名前は必須です');
+  }
+  return reqBody;
+};
+
+export const storeSubscriber = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const response = await subscriberUseCase.createOne(
       subscriberRepository.insertOne,
-      req.body
+      validateStoreReqest(req.body)
     );
     res.render('thanks');
   } catch (err) {
     console.error(err);
+    next(err);
   }
 };
