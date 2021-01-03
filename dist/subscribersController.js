@@ -28,12 +28,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.saveSubscriber = exports.getAllSubscribers = void 0;
+exports.storeSubscriber = exports.showAllSubscribers = void 0;
 const subscriberRepository = __importStar(require("./subscriberRepository"));
-const subscriberUseCase_1 = require("./subscriberUseCase");
-const getAllSubscribers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const subscriberUseCase = __importStar(require("./subscriberUseCase"));
+const showAllSubscribers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const subscribers = yield subscriberUseCase_1.getAllSubscribersUseCase(subscriberRepository.getAllSubscribers // DI、スイッチを渡す
+        const subscribers = yield subscriberUseCase.readAll(subscriberRepository.selectAll // DI、スイッチを渡す
         );
         res.render('subscribers', { subscribers });
     }
@@ -41,9 +41,14 @@ const getAllSubscribers = (req, res) => __awaiter(void 0, void 0, void 0, functi
         console.error(err);
     }
 });
-exports.getAllSubscribers = getAllSubscribers;
-const saveSubscriber = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const response = yield subscriberUseCase_1.saveSubscriberUseCase(subscriberRepository.createSubscriber, req.body);
-    res.render('thanks');
+exports.showAllSubscribers = showAllSubscribers;
+const storeSubscriber = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const response = yield subscriberUseCase.createOne(subscriberRepository.insertOne, req.body);
+        res.render('thanks');
+    }
+    catch (err) {
+        console.error(err);
+    }
 });
-exports.saveSubscriber = saveSubscriber;
+exports.storeSubscriber = storeSubscriber;

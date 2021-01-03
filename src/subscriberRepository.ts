@@ -7,12 +7,12 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false },
 });
 
-export const getAllSubscribers = async (): Promise<QueryResult> => {
+export const selectAll = async (): Promise<QueryResult> => {
   const query = 'SELECT * FROM contacts';
   return await pool.query(query);
 };
 
-export const createSubscriber = async (values: string[]) => {
+export const insertOne = async (values: string[]) => {
   const query = {
     text: "INSERT INTO contacts (name, email, zipcode) VALUES ($1, $2, $3);",
     values,

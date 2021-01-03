@@ -23,8 +23,8 @@ app
   .get('/', (req, res) => res.send('ようこそコンフェッティ・キュイジンへ'))
   .get('/courses', homeController.showCourses)
   .get('/contact', (req, res) => homeController.render('contact', req, res))
-  .post('/subscribe', subscribersController.saveSubscriber)
-  .get('/subscribers', subscribersController.getAllSubscribers)
+  .post('/subscribe', subscribersController.storeSubscriber)
+  .get('/subscribers', subscribersController.showAllSubscribers)
 
 // catch errors
 app

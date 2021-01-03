@@ -3,14 +3,14 @@
 import { subscriberable } from './subscriberEntity';
 import { QueryResult } from 'pg';
 
-export const getAllSubscribersUseCase = async (
+export const readAll = async (
   getAllSubscribers: () => Promise<QueryResult> // 高階関数でDI
 ): Promise<subscriberable[]> => {
   const data = await getAllSubscribers();
   return data.rows;
 };
 
-export const saveSubscriberUseCase = async (
+export const createOne = async (
   createSubscriber: (values: string[]) => Promise<any>,
   reqBody: any
 ) => {

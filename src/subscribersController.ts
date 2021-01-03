@@ -1,12 +1,12 @@
 import * as subscriberRepository from './subscriberRepository';
-import { getAllSubscribersUseCase, saveSubscriberUseCase } from './subscriberUseCase';
+import * as subscriberUseCase from './subscriberUseCase';
 import { subscriberable } from './subscriberEntity';
 import { Request, Response, NextFunction } from 'express';
 
-export const getAllSubscribers = async (req: Request, res: Response) => {
+export const showAllSubscribers = async (req: Request, res: Response) => {
   try {
-    const subscribers: subscriberable[] = await getAllSubscribersUseCase(
-      subscriberRepository.getAllSubscribers // DI、スイッチを渡す
+    const subscribers: subscriberable[] = await subscriberUseCase.readAll(
+      subscriberRepository.selectAll // DI、スイッチを渡す
     );
     res.render('subscribers', { subscribers });
   } catch (err) {
@@ -14,10 +14,14 @@ export const getAllSubscribers = async (req: Request, res: Response) => {
   }
 };
 
-export const saveSubscriber = async (req: Request, res: Response) => {
-  const response = await saveSubscriberUseCase(
-    subscriberRepository.createSubscriber,
-    req.body
-  );
-  res.render('thanks');
+export const storeSubscriber = async (req: Request, res: Response) => {
+  try {
+    const response = await subscriberUseCase.createOne(
+      subscriberRepository.insertOne,
+      req.body
+    );
+    res.render('thanks');
+  } catch (err) {
+    console.error(err);
+  }
 };
