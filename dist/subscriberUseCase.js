@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createOne = exports.readAll = void 0;
+exports.findEmail = exports.createOne = exports.readAll = void 0;
 const readAll = (getAllSubscribers // 高階関数でDI
 ) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield getAllSubscribers();
@@ -21,3 +21,7 @@ const createOne = (createSubscriber, reqBody) => __awaiter(void 0, void 0, void 
     return createSubscriber(values);
 });
 exports.createOne = createOne;
+const findEmail = (selectByEmail, email) => __awaiter(void 0, void 0, void 0, function* () {
+    return selectByEmail([email]);
+});
+exports.findEmail = findEmail;

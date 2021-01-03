@@ -8,10 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.insertOne = exports.selectAll = void 0;
-require('dotenv').config();
+exports.selectByEmail = exports.insertOne = exports.selectAll = void 0;
+const dotenv_1 = __importDefault(require("dotenv"));
 const pg_1 = require("pg");
+dotenv_1.default.config();
 const pool = new pg_1.Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false },
@@ -29,3 +33,11 @@ const insertOne = (values) => __awaiter(void 0, void 0, void 0, function* () {
     return yield pool.query(query);
 });
 exports.insertOne = insertOne;
+const selectByEmail = (values) => __awaiter(void 0, void 0, void 0, function* () {
+    const query = {
+        text: 'SELECT * FROM contacts WHERE "email" = $1',
+        values,
+    };
+    return yield pool.query(query);
+});
+exports.selectByEmail = selectByEmail;

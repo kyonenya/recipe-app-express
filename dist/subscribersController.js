@@ -42,15 +42,20 @@ const showAllSubscribers = (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.showAllSubscribers = showAllSubscribers;
-const validateStoreReqest = (reqBody) => {
-    if (!reqBody.name) {
-        throw new Error('名前は必須です');
-    }
-    return reqBody;
-};
 const storeSubscriber = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const validate = (reqBody) => __awaiter(void 0, void 0, void 0, function* () {
+        if (!reqBody.name) {
+            throw new Error('名前は必須です');
+        }
+        const emailResult = yield subscriberUseCase.findEmail(subscriberRepository.selectByEmail, reqBody.email);
+        if (emailResult.rowCount > 0) {
+            throw new Error('メールアドレスが既に登録されています');
+        }
+        return reqBody;
+    });
     try {
-        const response = yield subscriberUseCase.createOne(subscriberRepository.insertOne, validateStoreReqest(req.body));
+        const reqBody = yield validate(req.body);
+        const response = yield subscriberUseCase.createOne(subscriberRepository.insertOne, reqBody);
         res.render('thanks');
     }
     catch (err) {

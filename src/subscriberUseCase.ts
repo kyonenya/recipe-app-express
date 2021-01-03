@@ -17,3 +17,10 @@ export const createOne = async (
   const values = [reqBody.name, reqBody.email, reqBody.zipcode];
   return createSubscriber(values);
 };
+
+export const findEmail = async (
+  selectByEmail: (values: string[]) => Promise<QueryResult>,
+  email: string
+) => {
+  return selectByEmail([email]);
+};
