@@ -9,10 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllSubscribersUseCase = void 0;
+exports.saveSubscriberUseCase = exports.getAllSubscribersUseCase = void 0;
 const getAllSubscribersUseCase = (getAllSubscribers // 高階関数でDI
 ) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield getAllSubscribers();
     return data.rows;
 });
 exports.getAllSubscribersUseCase = getAllSubscribersUseCase;
+const saveSubscriberUseCase = (createSubscriber, reqBody) => __awaiter(void 0, void 0, void 0, function* () {
+    const values = [reqBody.name, reqBody.email, reqBody.zipcode];
+    return createSubscriber(values);
+});
+exports.saveSubscriberUseCase = saveSubscriberUseCase;

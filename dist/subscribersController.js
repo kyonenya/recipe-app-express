@@ -32,15 +32,18 @@ exports.saveSubscriber = exports.getAllSubscribers = void 0;
 const subscriberRepository = __importStar(require("./subscriberRepository"));
 const subscriberUseCase_1 = require("./subscriberUseCase");
 const getAllSubscribers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const subscribers = yield subscriberUseCase_1.getAllSubscribersUseCase(subscriberRepository.getAllSubscribers // DI、スイッチを渡す
-    );
-    res.render('subscribers', { subscribers });
+    try {
+        const subscribers = yield subscriberUseCase_1.getAllSubscribersUseCase(subscriberRepository.getAllSubscribers // DI、スイッチを渡す
+        );
+        res.render('subscribers', { subscribers });
+    }
+    catch (err) {
+        console.error(err);
+    }
 });
 exports.getAllSubscribers = getAllSubscribers;
 const saveSubscriber = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body);
-    const values = [req.body.name, req.body.email, req.body.zipcode];
-    const response = yield subscriberRepository.createSubscriber(values);
+    const response = yield subscriberUseCase_1.saveSubscriberUseCase(subscriberRepository.createSubscriber, req.body);
     res.render('thanks');
 });
 exports.saveSubscriber = saveSubscriber;

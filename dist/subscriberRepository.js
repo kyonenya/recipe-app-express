@@ -26,9 +26,6 @@ const createSubscriber = (values) => __awaiter(void 0, void 0, void 0, function*
         text: "INSERT INTO contacts (name, email, zipcode) VALUES ($1, $2, $3);",
         values,
     };
-    const response = yield pool.query(query);
-    return response;
+    return yield pool.query(query);
 });
 exports.createSubscriber = createSubscriber;
-// insertOne();
-// getAllSubscribers();

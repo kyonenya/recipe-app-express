@@ -17,10 +17,5 @@ export const createSubscriber = async (values: string[]) => {
     text: "INSERT INTO contacts (name, email, zipcode) VALUES ($1, $2, $3);",
     values,
   }
-  const response = await pool.query(query);
-  return response;
+  return await pool.query(query);
 };
-
-// insertOne();
-
-// getAllSubscribers();

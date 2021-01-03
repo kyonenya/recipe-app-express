@@ -9,3 +9,11 @@ export const getAllSubscribersUseCase = async (
   const data = await getAllSubscribers();
   return data.rows;
 };
+
+export const saveSubscriberUseCase = async (
+  createSubscriber: (values: string[]) => Promise<any>,
+  reqBody: any
+) => {
+  const values = [reqBody.name, reqBody.email, reqBody.zipcode];
+  return createSubscriber(values);
+};
