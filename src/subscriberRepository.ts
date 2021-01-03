@@ -1,16 +1,15 @@
 require('dotenv').config();
-import { Pool } from 'pg';
+import { Pool, QueryResult } from 'pg';
+import { subscriberable } from './subscriberEntity';
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false },
 });
 
-export const getAllSubscribers = async (): Promise<any> => {
+export const getAllSubscribers = async (): Promise<QueryResult> => {
   const query = 'SELECT * FROM contacts';
-  const response = await pool.query(query);
-  // console.log(response['rows']);
-  return response;
+  return await pool.query(query);
 };
 
 export const createSubscriber = async (values: string[]) => {

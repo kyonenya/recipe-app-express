@@ -18,9 +18,7 @@ const pool = new pg_1.Pool({
 });
 const getAllSubscribers = () => __awaiter(void 0, void 0, void 0, function* () {
     const query = 'SELECT * FROM contacts';
-    const response = yield pool.query(query);
-    // console.log(response['rows']);
-    return response;
+    return yield pool.query(query);
 });
 exports.getAllSubscribers = getAllSubscribers;
 const createSubscriber = (values) => __awaiter(void 0, void 0, void 0, function* () {

@@ -28,19 +28,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.saveSubscriber = exports.getAllSubscribers = void 0;
+exports.getAllSubscribersUseCase = void 0;
 const subscriberRepository = __importStar(require("./subscriberRepository"));
-const subscriberUseCase_1 = require("./subscriberUseCase");
-const getAllSubscribers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const subscribers = yield subscriberUseCase_1.getAllSubscribersUseCase();
-    console.log('contoroller', subscribers);
-    res.render('subscribers', { subscribers });
+const getAllSubscribersUseCase = () => __awaiter(void 0, void 0, void 0, function* () {
+    const data = yield subscriberRepository.getAllSubscribers();
+    console.log('usecase', data);
+    return data.rows;
 });
-exports.getAllSubscribers = getAllSubscribers;
-const saveSubscriber = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body);
-    const values = [req.body.name, req.body.email, req.body.zipcode];
-    const response = yield subscriberRepository.createSubscriber(values);
-    res.render('thanks');
-});
-exports.saveSubscriber = saveSubscriber;
+exports.getAllSubscribersUseCase = getAllSubscribersUseCase;
