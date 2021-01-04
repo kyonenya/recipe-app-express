@@ -30,11 +30,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.storeSubscriber = exports.isEmailDuplicated = exports.showAllSubscribers = void 0;
 const subscriberEntity_1 = require("./subscriberEntity");
+const postgres = __importStar(require("./postgres"));
 const subscriberRepository = __importStar(require("./subscriberRepository"));
 const subscriberUseCase = __importStar(require("./subscriberUseCase"));
 const showAllSubscribers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const subscribers = yield subscriberUseCase.readAll(subscriberRepository.selectAll // DI、スイッチを渡す
-    );
+    const subscribers = yield subscriberUseCase.readAll(subscriberRepository.selectAll, postgres.exec);
     res.render('subscribers', { subscribers });
 });
 exports.showAllSubscribers = showAllSubscribers;

@@ -10,9 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.findEmail = exports.createOne = exports.readAll = void 0;
-const readAll = (getAllSubscribers // 高階関数でDI
-) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield getAllSubscribers();
+const readAll = (selectAll, executor) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = yield selectAll(executor);
     return data.rows;
 });
 exports.readAll = readAll;

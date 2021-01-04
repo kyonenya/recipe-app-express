@@ -1,22 +1,26 @@
 import dotenv from 'dotenv';
-import * as postgres from './postgres';
+// ↓Repository should not know about Framework Layer
+// import * as postgres from './postgres';
 import { Pool, QueryResult } from 'pg';
 import { subscriberable } from './subscriberEntity';
 
 dotenv.config();
 
+/*
+ * @deprecated
+ */
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false },
 });
 
-export interface dbConnectable {
+export interface dbExecutable {
   (sql: string, params?: (string | number)[] | undefined): Promise<QueryResult>;
 };
 
-export const selectAll = async (): Promise<QueryResult> => {
+export const selectAll = async (executor: dbExecutable): Promise<QueryResult> => {
   const sql = 'SELECT * FROM contacts';
-  return await postgres.exec(sql);
+  return await executor(sql);
 };
 
 export const insertOne = async (values: string[]) => {

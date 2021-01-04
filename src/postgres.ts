@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { dbConnectable } from './subscriberRepository';
+import { dbExecutable } from './subscriberRepository';
 import { Pool, QueryResult } from 'pg';
 
 dotenv.config();
@@ -9,6 +9,6 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false },
 });
 
-export const exec: dbConnectable = async (sql, params = undefined) => {
+export const exec: dbExecutable = async (sql, params = undefined) => {
   return pool.query(sql, params);
 };

@@ -1,12 +1,14 @@
 // ↓useCase should not know about Repository
 // import * as subscriberRepository from './subscriberRepository';
 import { subscriberable, Subscriber } from './subscriberEntity';
+import { dbExecutable } from './subscriberRepository';
 import { QueryResult } from 'pg';
 
 export const readAll = async (
-  getAllSubscribers: () => Promise<QueryResult> // 高階関数でDI
+  selectAll: (executor: dbExecutable) => Promise<QueryResult>,
+  executor: dbExecutable,
 ): Promise<subscriberable[]> => {
-  const data = await getAllSubscribers();
+  const data = await selectAll(executor);
   return data.rows;
 };
 
