@@ -13,12 +13,11 @@ export const showAllSubscribers = async (req: Request, res: Response) => {
 };
 
 export const isEmailDuplicated = async (email: string): Promise<boolean> => {
-  const emailResult = await subscriberUseCase.findEmail(
+  return !(await subscriberUseCase.findEmail(
     subscriberRepository.selectByEmail,
     postgres.execute,
     email,
-  );
-  return emailResult.rowCount > 0;
+  ) === null);
 };
 
 export const storeSubscriber = async (req: Request, res: Response, next: NextFunction): Promise<void> => {

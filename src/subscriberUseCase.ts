@@ -25,5 +25,7 @@ export const findEmail = async (
   dbExecutor: dbExecutable,
   email: string,
 ) => {
-  return selectByEmail(dbExecutor, email);
+  const data = await selectByEmail(dbExecutor, email);
+  const row = data.rows[0];
+  return new Subscriber(row.name, row.email, row.zipcode);
 };

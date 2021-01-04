@@ -39,8 +39,7 @@ const showAllSubscribers = (req, res) => __awaiter(void 0, void 0, void 0, funct
 });
 exports.showAllSubscribers = showAllSubscribers;
 const isEmailDuplicated = (email) => __awaiter(void 0, void 0, void 0, function* () {
-    const emailResult = yield subscriberUseCase.findEmail(subscriberRepository.selectByEmail, postgres.execute, email);
-    return emailResult.rowCount > 0;
+    return !((yield subscriberUseCase.findEmail(subscriberRepository.selectByEmail, postgres.execute, email)) === null);
 });
 exports.isEmailDuplicated = isEmailDuplicated;
 const storeSubscriber = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

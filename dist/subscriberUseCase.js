@@ -23,6 +23,8 @@ const createOne = (insertOne, dbExecutor, subscriber) => __awaiter(void 0, void 
 });
 exports.createOne = createOne;
 const findEmail = (selectByEmail, dbExecutor, email) => __awaiter(void 0, void 0, void 0, function* () {
-    return selectByEmail(dbExecutor, email);
+    const data = yield selectByEmail(dbExecutor, email);
+    const row = data.rows[0];
+    return new subscriberEntity_1.Subscriber(row.name, row.email, row.zipcode);
 });
 exports.findEmail = findEmail;
