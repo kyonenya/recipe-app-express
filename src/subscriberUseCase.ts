@@ -19,8 +19,8 @@ export const createOne = async (
 };
 
 export const findEmail = async (
-  selectByEmail: (values: string[]) => Promise<QueryResult>,
-  email: string
+  email: string,
+  selectByEmail: (values: string[]) => Promise<QueryResult>
 ) => {
   return selectByEmail([email]);
 };

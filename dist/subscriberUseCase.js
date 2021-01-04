@@ -21,7 +21,7 @@ const createOne = (subscriber, createSubscriber) => __awaiter(void 0, void 0, vo
     return createSubscriber(values);
 });
 exports.createOne = createOne;
-const findEmail = (selectByEmail, email) => __awaiter(void 0, void 0, void 0, function* () {
+const findEmail = (email, selectByEmail) => __awaiter(void 0, void 0, void 0, function* () {
     return selectByEmail([email]);
 });
 exports.findEmail = findEmail;
