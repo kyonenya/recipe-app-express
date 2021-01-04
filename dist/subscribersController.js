@@ -39,7 +39,7 @@ const showAllSubscribers = (req, res) => __awaiter(void 0, void 0, void 0, funct
 });
 exports.showAllSubscribers = showAllSubscribers;
 const isEmailDuplicated = (email) => __awaiter(void 0, void 0, void 0, function* () {
-    const emailResult = yield subscriberUseCase.findEmail(email, subscriberRepository.selectByEmail);
+    const emailResult = yield subscriberUseCase.findEmail(subscriberRepository.selectByEmail, email);
     return emailResult.rowCount > 0;
 });
 exports.isEmailDuplicated = isEmailDuplicated;
@@ -48,7 +48,7 @@ const storeSubscriber = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
     if (yield exports.isEmailDuplicated(subscriber.email)) {
         throw new Error('メールアドレスが既に登録されています');
     }
-    const response = yield subscriberUseCase.createOne(subscriber, subscriberRepository.insertOne);
+    const response = yield subscriberUseCase.createOne(subscriberRepository.insertOne, subscriber);
     res.render('thanks');
 });
 exports.storeSubscriber = storeSubscriber;

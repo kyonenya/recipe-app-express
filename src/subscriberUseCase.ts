@@ -13,16 +13,16 @@ export const readAll = async (
 };
 
 export const createOne = async (
+  createSubscriber: (values: any[]) => Promise<any>,
   subscriber: Subscriber,
-  createSubscriber: (values: any[]) => Promise<any>
 ) => {
   const values = [subscriber.name, subscriber.email, subscriber.zipcode];
   return createSubscriber(values);
 };
 
 export const findEmail = async (
+  selectByEmail: (values: string[]) => Promise<QueryResult>,
   email: string,
-  selectByEmail: (values: string[]) => Promise<QueryResult>
 ) => {
   return selectByEmail([email]);
 };

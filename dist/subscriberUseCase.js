@@ -18,12 +18,12 @@ const readAll = (selectAll, executor) => __awaiter(void 0, void 0, void 0, funct
     return data.rows.map(row => new subscriberEntity_1.Subscriber(row.name, row.email, row.zipcode));
 });
 exports.readAll = readAll;
-const createOne = (subscriber, createSubscriber) => __awaiter(void 0, void 0, void 0, function* () {
+const createOne = (createSubscriber, subscriber) => __awaiter(void 0, void 0, void 0, function* () {
     const values = [subscriber.name, subscriber.email, subscriber.zipcode];
     return createSubscriber(values);
 });
 exports.createOne = createOne;
-const findEmail = (email, selectByEmail) => __awaiter(void 0, void 0, void 0, function* () {
+const findEmail = (selectByEmail, email) => __awaiter(void 0, void 0, void 0, function* () {
     return selectByEmail([email]);
 });
 exports.findEmail = findEmail;
