@@ -7,9 +7,9 @@ import { QueryResult } from 'pg';
 export const readAll = async (
   selectAll: (executor: dbExecutable) => Promise<QueryResult>,
   executor: dbExecutable,
-): Promise<subscriberable[]> => {
+): Promise<Subscriber[]> => {
   const data = await selectAll(executor);
-  return data.rows;
+  return data.rows.map(row => new Subscriber(row.name, row.email, row.zipcode));
 };
 
 export const createOne = async (

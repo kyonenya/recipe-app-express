@@ -18,7 +18,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 // import * as postgres from './postgres';
 const pg_1 = require("pg");
 dotenv_1.default.config();
-/*
+/*+
  * @deprecated
  */
 const pool = new pg_1.Pool({

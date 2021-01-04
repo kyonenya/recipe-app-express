@@ -10,9 +10,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.findEmail = exports.createOne = exports.readAll = void 0;
+// ↓useCase should not know about Repository
+// import * as subscriberRepository from './subscriberRepository';
+const subscriberEntity_1 = require("./subscriberEntity");
 const readAll = (selectAll, executor) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield selectAll(executor);
-    return data.rows;
+    return data.rows.map(row => new subscriberEntity_1.Subscriber(row.name, row.email, row.zipcode));
 });
 exports.readAll = readAll;
 const createOne = (subscriber, createSubscriber) => __awaiter(void 0, void 0, void 0, function* () {

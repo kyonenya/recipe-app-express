@@ -6,7 +6,7 @@ import { subscriberable } from './subscriberEntity';
 
 dotenv.config();
 
-/*
+/*+
  * @deprecated
  */
 const pool = new Pool({

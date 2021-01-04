@@ -6,7 +6,7 @@ import { subscriberable } from './subscriberEntity';
 import { Request, Response, NextFunction } from 'express';
 
 export const showAllSubscribers = async (req: Request, res: Response) => {
-  const subscribers: subscriberable[] = await subscriberUseCase.readAll(
+  const subscribers = await subscriberUseCase.readAll(
     subscriberRepository.selectAll,
     postgres.exec,
   );
