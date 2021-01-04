@@ -1,5 +1,5 @@
 CREATE TABLE contacts (
-  name ゔVARCHAR(255)
+  name VARCHAR(255)
   ,email VARCHAR(255)
   ,zipCode INT
 );

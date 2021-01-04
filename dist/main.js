@@ -45,7 +45,7 @@ app
 // route
 app
     .use(express_1.default.static('public'))
-    .get('/', (req, res) => res.send('ようこそコンフェッティ・キュイジンへ'))
+    .get('/', (req, res) => homeController.render('index', req, res))
     .get('/courses', homeController.showCourses)
     .get('/contact', (req, res) => homeController.render('contact', req, res))
     .post('/subscribe', subscribersController.storeSubscriber)
