@@ -5,19 +5,19 @@ import * as subscriberUseCase from './subscriberUseCase';
 import { Request, Response, NextFunction } from 'express';
 
 export const showAllSubscribers = async (req: Request, res: Response) => {
-  const subscribers = await subscriberUseCase.readAll(
-    subscriberRepository.selectAll,
-    postgres.execute,
-  );
+  const subscribers = await subscriberUseCase.readAll({
+    selectAll: subscriberRepository.selectAll,
+    dbExecutor: postgres.execute,
+  });
   res.render('subscribers', { subscribers });
 };
 
 export const isEmailDuplicated = async (email: string): Promise<boolean> => {
-  return !(await subscriberUseCase.findEmail(
-    subscriberRepository.selectByEmail,
-    postgres.execute,
+  return !(await subscriberUseCase.findEmail({
+    selectByEmail: subscriberRepository.selectByEmail,
+    dbExecutor: postgres.execute,
     email,
-  ) === null);
+  }) === null);
 };
 
 export const storeSubscriber = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -25,10 +25,10 @@ export const storeSubscriber = async (req: Request, res: Response, next: NextFun
   if (await isEmailDuplicated(subscriber.email)) {
     throw new Error('メールアドレスが既に登録されています');
   }
-  const response = await subscriberUseCase.createOne(
-    subscriberRepository.insertOne,
-    postgres.execute,
+  const response = await subscriberUseCase.createOne({
+    insertOne: subscriberRepository.insertOne,
+    dbExecutor: postgres.execute,
     subscriber,
-  );
+  });
   res.render('thanks');
 };

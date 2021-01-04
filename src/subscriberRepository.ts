@@ -1,18 +1,7 @@
 import { Subscriber } from './subscriberEntity';
-import dotenv from 'dotenv';
 // ↓Repository should not know about Framework Layer
 // import * as postgres from './postgres';
-import { Pool, QueryResult } from 'pg';
-
-dotenv.config();
-
-/**
- * @deprecated
- */
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
-});
+import { QueryResult } from 'pg';
 
 export interface dbExecutable {
   (sql: string, params?: (string | number)[] | undefined): Promise<QueryResult>;
