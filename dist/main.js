@@ -38,18 +38,17 @@ app
     .use(express_1.default.urlencoded({ extended: false }))
     .use(express_1.default.json());
 // async wrapper
-//const wrap = (fn: any) => (req: Request, res: Response, next: NextFunction) => {
-//  return fn(req, res, next)
-//    .catch(next);
-//}
+const asyncer = (fn) => (req, res, next) => {
+    return fn(req, res, next).catch(next);
+};
 // route
 app
     .use(express_1.default.static('public'))
     .get('/', (req, res) => homeController.render('index', req, res))
     .get('/courses', homeController.showCourses)
     .get('/contact', (req, res) => homeController.render('contact', req, res))
-    .post('/subscribe', subscribersController.storeSubscriber)
-    .get('/subscribers', subscribersController.showAllSubscribers);
+    .post('/subscribe', asyncer(subscribersController.storeSubscriber))
+    .get('/subscribers', asyncer(subscribersController.showAllSubscribers));
 // catch errors
 app
     .use(errorController.notFound)

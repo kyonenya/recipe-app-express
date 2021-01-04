@@ -33,14 +33,9 @@ const subscriberEntity_1 = require("./subscriberEntity");
 const subscriberRepository = __importStar(require("./subscriberRepository"));
 const subscriberUseCase = __importStar(require("./subscriberUseCase"));
 const showAllSubscribers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const subscribers = yield subscriberUseCase.readAll(subscriberRepository.selectAll // DI、スイッチを渡す
-        );
-        res.render('subscribers', { subscribers });
-    }
-    catch (err) {
-        // console.error(err);
-    }
+    const subscribers = yield subscriberUseCase.readAll(subscriberRepository.selectAll // DI、スイッチを渡す
+    );
+    res.render('subscribers', { subscribers });
 });
 exports.showAllSubscribers = showAllSubscribers;
 const isEmailDuplicated = (email) => __awaiter(void 0, void 0, void 0, function* () {
@@ -49,17 +44,11 @@ const isEmailDuplicated = (email) => __awaiter(void 0, void 0, void 0, function*
 });
 exports.isEmailDuplicated = isEmailDuplicated;
 const storeSubscriber = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const subscriber = new subscriberEntity_1.Subscriber(req.body.name, req.body.email, req.body.zipcode);
-        if (yield exports.isEmailDuplicated(subscriber.email)) {
-            throw new Error('メールアドレスが既に登録されています');
-        }
-        const response = yield subscriberUseCase.createOne(subscriber, subscriberRepository.insertOne);
-        res.render('thanks');
+    const subscriber = new subscriberEntity_1.Subscriber(req.body.name, req.body.email, req.body.zipcode);
+    if (yield exports.isEmailDuplicated(subscriber.email)) {
+        throw new Error('メールアドレスが既に登録されています');
     }
-    catch (err) {
-        next(err);
-    }
-    ;
+    const response = yield subscriberUseCase.createOne(subscriber, subscriberRepository.insertOne);
+    res.render('thanks');
 });
 exports.storeSubscriber = storeSubscriber;

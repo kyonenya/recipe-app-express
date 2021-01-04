@@ -18,10 +18,9 @@ app
   .use(express.json());
 
 // async wrapper
-//const wrap = (fn: any) => (req: Request, res: Response, next: NextFunction) => {
-//  return fn(req, res, next)
-//    .catch(next);
-//}
+const asyncer = (fn: any) => (req: any, res: any, next: any) => {
+  return fn(req, res, next).catch(next);
+};
 
 // route
 app
@@ -29,8 +28,8 @@ app
   .get('/', (req, res) => homeController.render('index', req, res))
   .get('/courses', homeController.showCourses)
   .get('/contact', (req, res) => homeController.render('contact', req, res))
-  .post('/subscribe', subscribersController.storeSubscriber)
-  .get('/subscribers', subscribersController.showAllSubscribers)
+  .post('/subscribe', asyncer(subscribersController.storeSubscriber))
+  .get('/subscribers', asyncer(subscribersController.showAllSubscribers))
 
 // catch errors
 app
