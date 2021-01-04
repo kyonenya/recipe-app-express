@@ -29,6 +29,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.storeSubscriber = exports.showAllSubscribers = void 0;
+const subscriberEntity_1 = require("./subscriberEntity");
 const subscriberRepository = __importStar(require("./subscriberRepository"));
 const subscriberUseCase = __importStar(require("./subscriberUseCase"));
 const showAllSubscribers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -38,15 +39,12 @@ const showAllSubscribers = (req, res) => __awaiter(void 0, void 0, void 0, funct
         res.render('subscribers', { subscribers });
     }
     catch (err) {
-        console.error(err);
+        // console.error(err);
     }
 });
 exports.showAllSubscribers = showAllSubscribers;
 const storeSubscriber = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const validate = (reqBody) => __awaiter(void 0, void 0, void 0, function* () {
-        if (!reqBody.name) {
-            throw new Error('名前は必須です');
-        }
         const emailResult = yield subscriberUseCase.findEmail(subscriberRepository.selectByEmail, reqBody.email);
         if (emailResult.rowCount > 0) {
             throw new Error('メールアドレスが既に登録されています');
@@ -55,11 +53,11 @@ const storeSubscriber = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
     });
     try {
         const reqBody = yield validate(req.body);
-        const response = yield subscriberUseCase.createOne(subscriberRepository.insertOne, reqBody);
+        const subscriber = new subscriberEntity_1.Subscriber(reqBody.name, reqBody.email, reqBody.zipcode);
+        const response = yield subscriberUseCase.createOne(subscriberRepository.insertOne, subscriber);
         res.render('thanks');
     }
     catch (err) {
-        console.error(err);
         next(err);
     }
 });

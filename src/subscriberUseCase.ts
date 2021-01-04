@@ -1,6 +1,6 @@
 // ↓useCaseはRepositoryのことを知ってはならない
 // import * as subscriberRepository from './subscriberRepository';
-import { subscriberable } from './subscriberEntity';
+import { subscriberable, Subscriber } from './subscriberEntity';
 import { QueryResult } from 'pg';
 
 export const readAll = async (
@@ -11,10 +11,10 @@ export const readAll = async (
 };
 
 export const createOne = async (
-  createSubscriber: (values: string[]) => Promise<any>,
-  reqBody: any
+  createSubscriber: (values: any[]) => Promise<any>,
+  subscriber: Subscriber
 ) => {
-  const values = [reqBody.name, reqBody.email, reqBody.zipcode];
+  const values = [subscriber.name, subscriber.email, subscriber.zipCode];
   return createSubscriber(values);
 };
 

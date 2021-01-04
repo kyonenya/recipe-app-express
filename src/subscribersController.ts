@@ -1,3 +1,4 @@
+import { Subscriber } from './subscriberEntity';
 import * as subscriberRepository from './subscriberRepository';
 import * as subscriberUseCase from './subscriberUseCase';
 import { subscriberable } from './subscriberEntity';
@@ -10,15 +11,12 @@ export const showAllSubscribers = async (req: Request, res: Response) => {
     );
     res.render('subscribers', { subscribers });
   } catch (err) {
-    console.error(err);
+    // console.error(err);
   }
 };
 
 export const storeSubscriber = async (req: Request, res: Response, next: NextFunction) => {
   const validate = async (reqBody: Request['body']) => {
-    if (!reqBody.name) {
-      throw new Error('名前は必須です');
-    }
     const emailResult = await subscriberUseCase.findEmail(
       subscriberRepository.selectByEmail,
       reqBody.email
@@ -31,13 +29,13 @@ export const storeSubscriber = async (req: Request, res: Response, next: NextFun
 
   try {
     const reqBody = await validate(req.body);
+    const subscriber: Subscriber = new Subscriber(reqBody.name, reqBody.email, reqBody.zipcode);
     const response = await subscriberUseCase.createOne(
       subscriberRepository.insertOne,
-      reqBody
+      subscriber
     );
     res.render('thanks');
   } catch (err) {
-    console.error(err);
     next(err);
   }
 };
