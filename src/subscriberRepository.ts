@@ -10,6 +10,10 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false },
 });
 
+export interface dbConnectable {
+  (sql: string, params?: (string | number)[] | undefined): Promise<QueryResult>;
+};
+
 export const selectAll = async (): Promise<QueryResult> => {
   const sql = 'SELECT * FROM contacts';
   return await postgres.exec(sql);

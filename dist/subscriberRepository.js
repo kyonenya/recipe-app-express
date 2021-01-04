@@ -40,6 +40,7 @@ const pool = new pg_1.Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false },
 });
+;
 const selectAll = () => __awaiter(void 0, void 0, void 0, function* () {
     const sql = 'SELECT * FROM contacts';
     return yield postgres.exec(sql);

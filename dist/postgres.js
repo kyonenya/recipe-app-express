@@ -20,7 +20,7 @@ const pool = new pg_1.Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false },
 });
-const exec = (sql, values = undefined) => __awaiter(void 0, void 0, void 0, function* () {
-    return pool.query(sql, values);
+const exec = (sql, params = undefined) => __awaiter(void 0, void 0, void 0, function* () {
+    return pool.query(sql, params);
 });
 exports.exec = exec;
