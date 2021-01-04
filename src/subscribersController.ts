@@ -15,27 +15,28 @@ export const showAllSubscribers = async (req: Request, res: Response) => {
   }
 };
 
+export const isEmailDuplicated = async (email: string): Promise<boolean> => {
+  const emailResult = await subscriberUseCase.findEmail(
+    subscriberRepository.selectByEmail,
+    email
+  );
+  return emailResult.rowCount > 0;
+};
+
 export const storeSubscriber = async (req: Request, res: Response, next: NextFunction) => {
-  const validate = async (reqBody: Request['body']) => {
-    const emailResult = await subscriberUseCase.findEmail(
-      subscriberRepository.selectByEmail,
-      reqBody.email
-    );
-    if (emailResult.rowCount > 0) {
+  try {
+    const subscriber: Subscriber = new Subscriber(req.body.name, req.body.email, req.body.zipcode);
+
+    if (await isEmailDuplicated(subscriber.email)) {
       throw new Error('メールアドレスが既に登録されています');
     }
-    return reqBody;
-  };
 
-  try {
-    const reqBody = await validate(req.body);
-    const subscriber: Subscriber = new Subscriber(reqBody.name, reqBody.email, reqBody.zipcode);
     const response = await subscriberUseCase.createOne(
-      subscriberRepository.insertOne,
-      subscriber
+      subscriber,
+      subscriberRepository.insertOne
     );
     res.render('thanks');
   } catch (err) {
     next(err);
-  }
+  };
 };

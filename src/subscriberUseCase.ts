@@ -1,4 +1,4 @@
-// ↓useCaseはRepositoryのことを知ってはならない
+// ↓useCase should not know about Repository
 // import * as subscriberRepository from './subscriberRepository';
 import { subscriberable, Subscriber } from './subscriberEntity';
 import { QueryResult } from 'pg';
@@ -11,8 +11,8 @@ export const readAll = async (
 };
 
 export const createOne = async (
-  createSubscriber: (values: any[]) => Promise<any>,
-  subscriber: Subscriber
+  subscriber: Subscriber,
+  createSubscriber: (values: any[]) => Promise<any>
 ) => {
   const values = [subscriber.name, subscriber.email, subscriber.zipCode];
   return createSubscriber(values);

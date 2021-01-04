@@ -28,7 +28,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.storeSubscriber = exports.showAllSubscribers = void 0;
+exports.storeSubscriber = exports.isEmailDuplicated = exports.showAllSubscribers = void 0;
 const subscriberEntity_1 = require("./subscriberEntity");
 const subscriberRepository = __importStar(require("./subscriberRepository"));
 const subscriberUseCase = __importStar(require("./subscriberUseCase"));
@@ -43,22 +43,23 @@ const showAllSubscribers = (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.showAllSubscribers = showAllSubscribers;
+const isEmailDuplicated = (email) => __awaiter(void 0, void 0, void 0, function* () {
+    const emailResult = yield subscriberUseCase.findEmail(subscriberRepository.selectByEmail, email);
+    return emailResult.rowCount > 0;
+});
+exports.isEmailDuplicated = isEmailDuplicated;
 const storeSubscriber = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const validate = (reqBody) => __awaiter(void 0, void 0, void 0, function* () {
-        const emailResult = yield subscriberUseCase.findEmail(subscriberRepository.selectByEmail, reqBody.email);
-        if (emailResult.rowCount > 0) {
+    try {
+        const subscriber = new subscriberEntity_1.Subscriber(req.body.name, req.body.email, req.body.zipcode);
+        if (yield exports.isEmailDuplicated(subscriber.email)) {
             throw new Error('メールアドレスが既に登録されています');
         }
-        return reqBody;
-    });
-    try {
-        const reqBody = yield validate(req.body);
-        const subscriber = new subscriberEntity_1.Subscriber(reqBody.name, reqBody.email, reqBody.zipcode);
-        const response = yield subscriberUseCase.createOne(subscriberRepository.insertOne, subscriber);
+        const response = yield subscriberUseCase.createOne(subscriber, subscriberRepository.insertOne);
         res.render('thanks');
     }
     catch (err) {
         next(err);
     }
+    ;
 });
 exports.storeSubscriber = storeSubscriber;

@@ -16,7 +16,7 @@ const readAll = (getAllSubscribers // 高階関数でDI
     return data.rows;
 });
 exports.readAll = readAll;
-const createOne = (createSubscriber, subscriber) => __awaiter(void 0, void 0, void 0, function* () {
+const createOne = (subscriber, createSubscriber) => __awaiter(void 0, void 0, void 0, function* () {
     const values = [subscriber.name, subscriber.email, subscriber.zipCode];
     return createSubscriber(values);
 });
