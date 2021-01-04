@@ -18,9 +18,9 @@ const readAll = (selectAll, executor) => __awaiter(void 0, void 0, void 0, funct
     return data.rows.map(row => new subscriberEntity_1.Subscriber(row.name, row.email, row.zipcode));
 });
 exports.readAll = readAll;
-const createOne = (createSubscriber, subscriber) => __awaiter(void 0, void 0, void 0, function* () {
-    const values = [subscriber.name, subscriber.email, subscriber.zipcode];
-    return createSubscriber(values);
+const createOne = (insertOne, dbExecutor, subscriber) => __awaiter(void 0, void 0, void 0, function* () {
+    const params = [subscriber.name, subscriber.email, subscriber.zipcode];
+    return yield insertOne(dbExecutor, params);
 });
 exports.createOne = createOne;
 const findEmail = (selectByEmail, email) => __awaiter(void 0, void 0, void 0, function* () {

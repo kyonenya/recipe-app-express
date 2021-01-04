@@ -13,11 +13,12 @@ export const readAll = async (
 };
 
 export const createOne = async (
-  createSubscriber: (values: any[]) => Promise<any>,
+  insertOne: any,
+  dbExecutor: dbExecutable,
   subscriber: Subscriber,
 ) => {
-  const values = [subscriber.name, subscriber.email, subscriber.zipcode];
-  return createSubscriber(values);
+  const params = [subscriber.name, subscriber.email, subscriber.zipcode];
+  return await insertOne(dbExecutor, params);
 };
 
 export const findEmail = async (

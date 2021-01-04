@@ -22,13 +22,12 @@ export const isEmailDuplicated = async (email: string): Promise<boolean> => {
 
 export const storeSubscriber = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const subscriber: Subscriber = new Subscriber(req.body.name, req.body.email, req.body.zipcode);
-
   if (await isEmailDuplicated(subscriber.email)) {
     throw new Error('メールアドレスが既に登録されています');
   }
-
   const response = await subscriberUseCase.createOne(
     subscriberRepository.insertOne,
+    postgres.exec,
     subscriber,
   );
   res.render('thanks');

@@ -18,7 +18,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 // import * as postgres from './postgres';
 const pg_1 = require("pg");
 dotenv_1.default.config();
-/*+
+/**
  * @deprecated
  */
 const pool = new pg_1.Pool({
@@ -27,21 +27,18 @@ const pool = new pg_1.Pool({
 });
 ;
 const selectAll = (executor) => __awaiter(void 0, void 0, void 0, function* () {
-    const sql = 'SELECT * FROM contacts';
+    const sql = 'SELECT * FROM subscribers';
     return yield executor(sql);
 });
 exports.selectAll = selectAll;
-const insertOne = (values) => __awaiter(void 0, void 0, void 0, function* () {
-    const query = {
-        text: "INSERT INTO contacts (name, email, zipcode) VALUES ($1, $2, $3);",
-        values,
-    };
-    return yield pool.query(query);
+const insertOne = (executor, params) => __awaiter(void 0, void 0, void 0, function* () {
+    const sql = 'INSERT INTO subscribers (name, email, zipcode) VALUES ($1, $2, $3);';
+    return yield executor(sql, params);
 });
 exports.insertOne = insertOne;
 const selectByEmail = (values) => __awaiter(void 0, void 0, void 0, function* () {
     const query = {
-        text: 'SELECT * FROM contacts WHERE "email" = $1',
+        text: 'SELECT * FROM subscribers WHERE "email" = $1',
         values,
     };
     return yield pool.query(query);
