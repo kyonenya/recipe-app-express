@@ -1,3 +1,5 @@
+- 高階関数でDI
+
 CREATE TABLE contacts (
   name VARCHAR(255)
   ,email VARCHAR(255)
