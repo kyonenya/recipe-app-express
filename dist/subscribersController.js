@@ -34,12 +34,12 @@ const postgres = __importStar(require("./postgres"));
 const subscriberRepository = __importStar(require("./subscriberRepository"));
 const subscriberUseCase = __importStar(require("./subscriberUseCase"));
 const showAllSubscribers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const subscribers = yield subscriberUseCase.readAll(subscriberRepository.selectAll, postgres.exec);
+    const subscribers = yield subscriberUseCase.readAll(subscriberRepository.selectAll, postgres.execute);
     res.render('subscribers', { subscribers });
 });
 exports.showAllSubscribers = showAllSubscribers;
 const isEmailDuplicated = (email) => __awaiter(void 0, void 0, void 0, function* () {
-    const emailResult = yield subscriberUseCase.findEmail(subscriberRepository.selectByEmail, email);
+    const emailResult = yield subscriberUseCase.findEmail(subscriberRepository.selectByEmail, postgres.execute, email);
     return emailResult.rowCount > 0;
 });
 exports.isEmailDuplicated = isEmailDuplicated;
@@ -48,7 +48,7 @@ const storeSubscriber = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
     if (yield exports.isEmailDuplicated(subscriber.email)) {
         throw new Error('メールアドレスが既に登録されています');
     }
-    const response = yield subscriberUseCase.createOne(subscriberRepository.insertOne, postgres.exec, subscriber);
+    const response = yield subscriberUseCase.createOne(subscriberRepository.insertOne, postgres.execute, subscriber);
     res.render('thanks');
 });
 exports.storeSubscriber = storeSubscriber;

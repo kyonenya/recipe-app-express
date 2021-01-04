@@ -6,24 +6,24 @@ import { QueryResult } from 'pg';
 
 export const readAll = async (
   selectAll: (executor: dbExecutable) => Promise<QueryResult>,
-  executor: dbExecutable,
+  dbExecutor: dbExecutable,
 ): Promise<Subscriber[]> => {
-  const data = await selectAll(executor);
+  const data = await selectAll(dbExecutor);
   return data.rows.map(row => new Subscriber(row.name, row.email, row.zipcode));
 };
 
 export const createOne = async (
-  insertOne: any,
+  insertOne: (dbExecutor: dbExecutable, subscriber: Subscriber) => Promise<QueryResult>,
   dbExecutor: dbExecutable,
   subscriber: Subscriber,
 ) => {
-  const params = [subscriber.name, subscriber.email, subscriber.zipcode];
-  return await insertOne(dbExecutor, params);
+  return await insertOne(dbExecutor, subscriber);
 };
 
 export const findEmail = async (
-  selectByEmail: (values: string[]) => Promise<QueryResult>,
+  selectByEmail: (dbExecutor: dbExecutable, email: string) => Promise<QueryResult>,
+  dbExecutor: dbExecutable,
   email: string,
 ) => {
-  return selectByEmail([email]);
+  return selectByEmail(dbExecutor, email);
 };

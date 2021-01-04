@@ -7,7 +7,7 @@ import { Request, Response, NextFunction } from 'express';
 export const showAllSubscribers = async (req: Request, res: Response) => {
   const subscribers = await subscriberUseCase.readAll(
     subscriberRepository.selectAll,
-    postgres.exec,
+    postgres.execute,
   );
   res.render('subscribers', { subscribers });
 };
@@ -15,6 +15,7 @@ export const showAllSubscribers = async (req: Request, res: Response) => {
 export const isEmailDuplicated = async (email: string): Promise<boolean> => {
   const emailResult = await subscriberUseCase.findEmail(
     subscriberRepository.selectByEmail,
+    postgres.execute,
     email,
   );
   return emailResult.rowCount > 0;
@@ -27,7 +28,7 @@ export const storeSubscriber = async (req: Request, res: Response, next: NextFun
   }
   const response = await subscriberUseCase.createOne(
     subscriberRepository.insertOne,
-    postgres.exec,
+    postgres.execute,
     subscriber,
   );
   res.render('thanks');

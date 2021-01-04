@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.exec = void 0;
+exports.execute = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 const pg_1 = require("pg");
 dotenv_1.default.config();
@@ -20,7 +20,7 @@ const pool = new pg_1.Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false },
 });
-const exec = (sql, params = undefined) => __awaiter(void 0, void 0, void 0, function* () {
+const execute = (sql, params = undefined) => __awaiter(void 0, void 0, void 0, function* () {
     return pool.query(sql, params);
 });
-exports.exec = exec;
+exports.execute = execute;

@@ -9,6 +9,6 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false },
 });
 
-export const exec: dbExecutable = async (sql, params = undefined) => {
+export const execute: dbExecutable = async (sql, params = undefined) => {
   return pool.query(sql, params);
 };

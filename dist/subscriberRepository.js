@@ -31,16 +31,15 @@ const selectAll = (executor) => __awaiter(void 0, void 0, void 0, function* () {
     return yield executor(sql);
 });
 exports.selectAll = selectAll;
-const insertOne = (executor, params) => __awaiter(void 0, void 0, void 0, function* () {
+const insertOne = (executor, subscriber) => __awaiter(void 0, void 0, void 0, function* () {
     const sql = 'INSERT INTO subscribers (name, email, zipcode) VALUES ($1, $2, $3);';
+    const params = [subscriber.name, subscriber.email, subscriber.zipcode];
     return yield executor(sql, params);
 });
 exports.insertOne = insertOne;
-const selectByEmail = (values) => __awaiter(void 0, void 0, void 0, function* () {
-    const query = {
-        text: 'SELECT * FROM subscribers WHERE "email" = $1',
-        values,
-    };
-    return yield pool.query(query);
+const selectByEmail = (executor, email) => __awaiter(void 0, void 0, void 0, function* () {
+    const sql = 'SELECT * FROM subscribers WHERE "email" = $1';
+    const params = [email];
+    return yield executor(sql, params);
 });
 exports.selectByEmail = selectByEmail;
