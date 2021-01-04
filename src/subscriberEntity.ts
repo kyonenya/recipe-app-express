@@ -6,7 +6,11 @@ export type subscriberable = {
 
 const isNameValid = (name: string): boolean => {
   return name.length > 0;
-}
+};
+
+const isZipCodeValid = (zipCode: number): boolean => {
+  return 10000 < zipCode && zipCode < 99999;
+};
 
 export class Subscriber {
   constructor(
@@ -15,5 +19,6 @@ export class Subscriber {
     public zipCode: number
   ) {
     if (!isNameValid(this.name)) throw new Error('不正な名前です');
+    if (!isZipCodeValid(this.zipCode)) throw new Error('不正なzipCodeです');
   }
-}
+};
