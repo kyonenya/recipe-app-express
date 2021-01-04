@@ -2,7 +2,6 @@ import { Subscriber } from './subscriberEntity';
 import * as postgres from './postgres';
 import * as subscriberRepository from './subscriberRepository';
 import * as subscriberUseCase from './subscriberUseCase';
-import { subscriberable } from './subscriberEntity';
 import { Request, Response, NextFunction } from 'express';
 
 export const showAllSubscribers = async (req: Request, res: Response) => {

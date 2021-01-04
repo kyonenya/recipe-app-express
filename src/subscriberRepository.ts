@@ -2,7 +2,6 @@ import dotenv from 'dotenv';
 // ↓Repository should not know about Framework Layer
 // import * as postgres from './postgres';
 import { Pool, QueryResult } from 'pg';
-import { subscriberable } from './subscriberEntity';
 
 dotenv.config();
 

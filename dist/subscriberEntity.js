@@ -8,13 +8,13 @@ const isZipCodeValid = (zipCode) => {
     return 10000 < zipCode && zipCode < 99999;
 };
 class Subscriber {
-    constructor(name, email, zipCode) {
+    constructor(name, email, zipcode) {
         this.name = name;
         this.email = email;
-        this.zipCode = zipCode;
+        this.zipcode = zipcode;
         if (!isNameValid(this.name))
             throw new Error('不正な名前です');
-        if (!isZipCodeValid(this.zipCode))
+        if (!isZipCodeValid(this.zipcode))
             throw new Error('不正なzipCodeです');
     }
 }

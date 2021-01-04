@@ -19,7 +19,7 @@ const readAll = (selectAll, executor) => __awaiter(void 0, void 0, void 0, funct
 });
 exports.readAll = readAll;
 const createOne = (subscriber, createSubscriber) => __awaiter(void 0, void 0, void 0, function* () {
-    const values = [subscriber.name, subscriber.email, subscriber.zipCode];
+    const values = [subscriber.name, subscriber.email, subscriber.zipcode];
     return createSubscriber(values);
 });
 exports.createOne = createOne;

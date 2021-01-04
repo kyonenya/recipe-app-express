@@ -1,6 +1,6 @@
 // ↓useCase should not know about Repository
 // import * as subscriberRepository from './subscriberRepository';
-import { subscriberable, Subscriber } from './subscriberEntity';
+import { Subscriber } from './subscriberEntity';
 import { dbExecutable } from './subscriberRepository';
 import { QueryResult } from 'pg';
 
@@ -16,7 +16,7 @@ export const createOne = async (
   subscriber: Subscriber,
   createSubscriber: (values: any[]) => Promise<any>
 ) => {
-  const values = [subscriber.name, subscriber.email, subscriber.zipCode];
+  const values = [subscriber.name, subscriber.email, subscriber.zipcode];
   return createSubscriber(values);
 };
 
