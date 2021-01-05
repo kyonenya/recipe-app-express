@@ -1,27 +1,15 @@
 import { Subscriber } from './subscriberEntity';
 import { schemable } from './subscribersRepository';
-import { dbExecutable } from './repository';
-/** 
- * @deprecated
- * UseCase should receive pure Entity. So should not know anout QueryResult.
- */
-import { QueryResult } from 'pg';
 
-// inverse DTO
-const entitize = ({ name, email, zipcode }: schemable): Subscriber => {
-  return { name, email, zipCode: zipcode };
-};
-
-// DTO
+// DTO -> repository
 const schemize = ({ name, email, zipCode }: Subscriber): schemable => {
   return { name, email, zipcode: zipCode };
 };
 
 export const readAll = async (
-  execSelectAll: () => Promise<QueryResult>
+  execSelectAll: () => Promise<Subscriber[]>
 ): Promise<Subscriber[]> => {
-  const data = await execSelectAll();
-  return data.rows.map(row => new Subscriber(entitize(row)));
+  return await execSelectAll();
 };
 
 export const createOne = async (
@@ -32,9 +20,7 @@ export const createOne = async (
 };
 
 export const findEmail = async (
-  execSelectByEmail: () => Promise<QueryResult>
+  execSelectByEmail: () => Promise<Subscriber|null>
 ): Promise<Subscriber|null> => {
-  const data = await execSelectByEmail();
-  if (data.rowCount === 0) return null;
-  return new Subscriber(entitize(data.rows[0]));
+  return await execSelectByEmail();
 };

@@ -10,18 +10,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.findEmail = exports.createOne = exports.readAll = void 0;
-const subscriberEntity_1 = require("./subscriberEntity");
-// inverse DTO
-const entitize = ({ name, email, zipcode }) => {
-    return { name, email, zipCode: zipcode };
-};
-// DTO
+// DTO -> repository
 const schemize = ({ name, email, zipCode }) => {
     return { name, email, zipcode: zipCode };
 };
 const readAll = (execSelectAll) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield execSelectAll();
-    return data.rows.map(row => new subscriberEntity_1.Subscriber(entitize(row)));
+    return yield execSelectAll();
 });
 exports.readAll = readAll;
 const createOne = (execInsertOne, subscriber) => __awaiter(void 0, void 0, void 0, function* () {
@@ -29,9 +23,6 @@ const createOne = (execInsertOne, subscriber) => __awaiter(void 0, void 0, void 
 });
 exports.createOne = createOne;
 const findEmail = (execSelectByEmail) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield execSelectByEmail();
-    if (data.rowCount === 0)
-        return null;
-    return new subscriberEntity_1.Subscriber(entitize(data.rows[0]));
+    return yield execSelectByEmail();
 });
 exports.findEmail = findEmail;
