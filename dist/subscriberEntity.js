@@ -10,10 +10,10 @@ const isZipCodeValid = (zipcode) => {
 };
 exports.isZipCodeValid = isZipCodeValid;
 class Subscriber {
-    constructor({ name, email, zipcode }) {
-        this.name = name;
-        this.email = email;
-        this.zipcode = zipcode;
+    constructor(props) {
+        this.name = props.name;
+        this.email = props.email;
+        this.zipcode = props.zipcode;
         if (!exports.isNameValid(this.name))
             throw new Error('不正な名前です');
         if (!exports.isZipCodeValid(this.zipcode))

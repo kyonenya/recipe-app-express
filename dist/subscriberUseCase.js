@@ -24,7 +24,8 @@ const createOne = ({ insertOne, dbExecutor, subscriber }) => __awaiter(void 0, v
 exports.createOne = createOne;
 const findEmail = ({ selectByEmail, dbExecutor, email }) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield selectByEmail(dbExecutor, email);
-    const row = data.rows[0];
-    return new subscriberEntity_1.Subscriber(row);
+    if (data.rowCount === 0)
+        return null;
+    return new subscriberEntity_1.Subscriber(data.rows[0]);
 });
 exports.findEmail = findEmail;

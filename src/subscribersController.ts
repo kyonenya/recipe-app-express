@@ -21,7 +21,11 @@ export const isEmailDuplicated = async (email: string): Promise<boolean> => {
 };
 
 export const storeSubscriber = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  const subscriber: Subscriber = new Subscriber(req.body);
+  const subscriber: Subscriber = new Subscriber({
+    name: req.body.name,
+    email: req.body.email,
+    zipcode: req.body.zipcode,
+  });
   if (await isEmailDuplicated(subscriber.email)) {
     throw new Error('メールアドレスが既に登録されています');
   }

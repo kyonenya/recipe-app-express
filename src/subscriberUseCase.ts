@@ -24,8 +24,8 @@ export const findEmail = async ({ selectByEmail, dbExecutor, email }: {
   selectByEmail: (dbExecutor: dbExecutable, email: string) => Promise<QueryResult>;
   dbExecutor: dbExecutable;
   email: string;
-}) => {
+}): Promise<Subscriber|null> => {
   const data = await selectByEmail(dbExecutor, email);
-  const row = data.rows[0];
-  return new Subscriber(row);
+  if (data.rowCount === 0) return null;
+  return new Subscriber(data.rows[0]);
 };
