@@ -10,8 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.selectByEmail = exports.insertOne = exports.selectAll = void 0;
-// ↓Repository should not know about Framework Layer
-// import * as postgres from './postgres';
 const selectAll = (executor) => __awaiter(void 0, void 0, void 0, function* () {
     const sql = 'SELECT * FROM subscribers';
     return yield executor(sql);

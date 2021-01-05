@@ -27,7 +27,8 @@ export const storeSubscriber = async (req: Request, res: Response): Promise<void
     throw new Error('メールアドレスが既に登録されています');
   }
   const response = await subscriberUseCase.createOne(
-    () => subscribersRepository.insertOne(postgres.execute, subscriber)
+    (params) => subscribersRepository.insertOne(postgres.execute, params),
+    subscriber,
   );
   res.render('thanks');
 };

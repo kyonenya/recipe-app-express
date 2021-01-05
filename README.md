@@ -2,6 +2,9 @@
 - 内側の層でinterfaceを発行して外側の層で実装（契約）
 - DBカラムで大文字が死ぬ問題
 
+- UseCase should not know about Repository.
+// import * as subscriberRepository from './subscriberRepository';
+
 CREATE TABLE users (
   firestName VARCHAR(255)
   ,lastName VARCHAR(255)

@@ -4,6 +4,13 @@ import { QueryResult } from 'pg';
 // ↓Repository should not know about Framework Layer
 // import * as postgres from './postgres';
 
+// schema
+export type schemable = {
+  name: string;
+  email: string;
+  zipcode: number;
+}
+
 export const selectAll = async (executor: dbExecutable): Promise<QueryResult> => {
   const sql = 'SELECT * FROM subscribers';
   return await executor(sql);
