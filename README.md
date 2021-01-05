@@ -8,16 +8,16 @@
 
 ## 責務違反の記録（古い順）
 
-- UseCase should not know about Repository.
+- UseCase should not know about Repository.  
 // import * as subscribersRepository from './subscribersRepository';
 
-- Repository should not know about Infrastructure Layer.
+- Repository should not know about Infrastructure Layer.  
 // import * as postgres from './postgres';
 
-- UseCase should not know anout QueryResult, so should not receive it as a return value of Repository. Instead, receive pure Entity.
+- UseCase should not know anout QueryResult, so should not receive it as a return value of Repository. Instead, receive pure Entity.  
 // import { QueryResult } from 'pg';
 
-- UseCase need not to know Repository at all, by injencting dbExecutor in Controller and not in UseCase.
+- UseCase need not to know Repository at all, by injencting dbExecutor in Controller and not in UseCase.  
 // import { dbExecutable } from './repository';
 
 

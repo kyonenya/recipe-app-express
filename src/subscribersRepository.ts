@@ -20,9 +20,9 @@ export const selectAll = async (dbExecutor: dbExecutable): Promise<Subscriber[]>
   return queryResult.rows.map((row: any) => entitize(row));
 };
 
-export const insertOne = async (dbExecutor: dbExecutable, subscriber: Subscriber): Promise<boolean> => {
+export const insertOne = async (dbExecutor: dbExecutable, subscriber: schemable): Promise<boolean> => {
   const sql = 'INSERT INTO subscribers (name, email, zipcode) VALUES ($1, $2, $3);';
-  const params = [subscriber.name, subscriber.email, subscriber.zipCode];
+  const params = [subscriber.name, subscriber.email, subscriber.zipcode];
   const queryResult = await dbExecutor(sql, params);
   return queryResult.rowCount === 1;
 };

@@ -13,7 +13,7 @@ export const readAll = async (
 };
 
 export const createOne = async (
-  execInsertOne: (params: any) => Promise<boolean>,
+  execInsertOne: (params: schemable) => Promise<boolean>,
   subscriber: Subscriber,
 ) => {
   return await execInsertOne(schemize(subscriber));
