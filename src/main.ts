@@ -2,7 +2,7 @@ import express, { NextFunction } from 'express';
 import layouts from 'express-ejs-layouts';
 import * as homeController from './homeController';
 import * as userController from './userContoroller';
-import * as subscribersController from './subscribersController';
+import * as subscriberController from './subscriberController';
 import * as errorController from './errorController';
 
 const app = express();
@@ -29,8 +29,8 @@ app
   .get('/', (req, res) => homeController.render('index', req, res))
   .get('/courses', homeController.showCourses)
   .get('/contact', (req, res) => homeController.render('contact', req, res))
-  .post('/subscribe', asyncer(subscribersController.storeSubscriber))
-  .get('/subscribers', asyncer(subscribersController.showAllSubscribers))
+  .post('/subscribe', asyncer(subscriberController.storeSubscriber))
+  .get('/subscribers', asyncer(subscriberController.showAllSubscribers))
   .get('/users', asyncer(userController.index))
   ;
 

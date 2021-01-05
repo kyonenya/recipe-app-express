@@ -1,7 +1,7 @@
 // ↓useCase should not know about Repository
 // import * as subscriberRepository from './subscriberRepository';
 import { Subscriber } from './subscriberEntity';
-import { dbExecutable } from './subscriberRepository';
+import { dbExecutable } from './repository';
 /** 
  * @deprecated
  * UseCase should receive pure Entity. So should not know anout QueryResult.

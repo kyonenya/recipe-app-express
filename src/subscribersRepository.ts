@@ -1,11 +1,8 @@
 import { Subscriber } from './subscriberEntity';
+import { dbExecutable } from './repository';
+import { QueryResult } from 'pg';
 // ↓Repository should not know about Framework Layer
 // import * as postgres from './postgres';
-import { QueryResult } from 'pg';
-
-export interface dbExecutable {
-  (sql: string, params?: (string | number)[] | undefined): Promise<QueryResult>;
-};
 
 export const selectAll = async (executor: dbExecutable): Promise<QueryResult> => {
   const sql = 'SELECT * FROM subscribers';

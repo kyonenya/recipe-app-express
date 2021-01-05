@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { dbExecutable } from './subscriberRepository';
+import { dbExecutable } from './repository';
 import { Pool, QueryResult } from 'pg';
 
 dotenv.config();

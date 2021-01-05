@@ -1,4 +1,4 @@
-import { dbExecutable } from './subscriberRepository';
+import { dbExecutable } from './repository';
 import { QueryResult } from 'pg';
 
 export const readAll = async (
