@@ -13,17 +13,15 @@ exports.findEmail = exports.createOne = exports.readAll = void 0;
 const subscriberEntity_1 = require("./subscriberEntity");
 // inverse DTO
 const entitize = ({ name, email, zipcode }) => {
-    const re = { name, email, zipCode: zipcode };
-    console.log(re);
-    return { name, email, zipcode };
+    return { name, email, zipCode: zipcode };
 };
 // DTO
-const schemize = ({ name, email, zipcode }) => {
-    return { name, email, zipcode: zipcode };
+const schemize = ({ name, email, zipCode }) => {
+    return { name, email, zipcode: zipCode };
 };
 const readAll = (execSelectAll) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield execSelectAll();
-    return data.rows.map(row => new subscriberEntity_1.Subscriber(row));
+    return data.rows.map(row => new subscriberEntity_1.Subscriber(entitize(row)));
 });
 exports.readAll = readAll;
 const createOne = (execInsertOne, subscriber) => __awaiter(void 0, void 0, void 0, function* () {
@@ -34,6 +32,6 @@ const findEmail = (execSelectByEmail) => __awaiter(void 0, void 0, void 0, funct
     const data = yield execSelectByEmail();
     if (data.rowCount === 0)
         return null;
-    return new subscriberEntity_1.Subscriber(data.rows[0]);
+    return new subscriberEntity_1.Subscriber(entitize(data.rows[0]));
 });
 exports.findEmail = findEmail;

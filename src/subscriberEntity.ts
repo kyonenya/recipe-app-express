@@ -10,18 +10,18 @@ export class Subscriber {
   // immutablize
   public readonly name: string;
   public readonly email: string;
-  public readonly zipcode: number;
+  public readonly zipCode: number;
   
-  constructor({ name, email, zipcode }: {
+  constructor({ name, email, zipCode }: {
     name: string;
     email: string;
-    zipcode: number;
+    zipCode: number;
   }) {
     this.name = name;
     this.email = email;
-    this.zipcode = zipcode;
+    this.zipCode = zipCode;
     
     if (!isNameValid(this.name)) throw new Error('不正な名前です');
-    if (!isZipCodeValid(this.zipcode)) throw new Error('不正な郵便番号です');
+    if (!isZipCodeValid(this.zipCode)) throw new Error('不正な郵便番号です');
   };
 };

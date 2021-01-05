@@ -21,9 +21,9 @@ export const storeSubscriber = async (req: Request, res: Response): Promise<void
   const subscriber: Subscriber = new Subscriber({
     name: req.body.name,
     email: req.body.email,
-    zipcode: req.body.zipcode,
+    zipCode: req.body.zipCode,
   });
-  if (await isEmailDuplicated(subscriber.email)) {
+  if (await isEmailDuplicated(req.body.email)) {
     throw new Error('メールアドレスが既に登録されています');
   }
   const response = await subscriberUseCase.createOne(

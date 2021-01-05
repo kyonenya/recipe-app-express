@@ -46,9 +46,9 @@ const storeSubscriber = (req, res) => __awaiter(void 0, void 0, void 0, function
     const subscriber = new subscriberEntity_1.Subscriber({
         name: req.body.name,
         email: req.body.email,
-        zipcode: req.body.zipcode,
+        zipCode: req.body.zipCode,
     });
-    if (yield exports.isEmailDuplicated(subscriber.email)) {
+    if (yield exports.isEmailDuplicated(req.body.email)) {
         throw new Error('メールアドレスが既に登録されています');
     }
     const response = yield subscriberUseCase.createOne((params) => subscribersRepository.insertOne(postgres.execute, params), subscriber);

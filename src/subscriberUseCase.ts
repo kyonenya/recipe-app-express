@@ -9,25 +9,23 @@ import { QueryResult } from 'pg';
 
 // inverse DTO
 const entitize = ({ name, email, zipcode }: schemable): Subscriber => {
-  const re = { name, email, zipCode: zipcode };
-  console.log(re);
-  return { name, email, zipcode };
+  return { name, email, zipCode: zipcode };
 };
 
 // DTO
-const schemize = ({ name, email, zipcode }: Subscriber): schemable => {
-  return { name, email, zipcode: zipcode };
+const schemize = ({ name, email, zipCode }: Subscriber): schemable => {
+  return { name, email, zipcode: zipCode };
 };
 
 export const readAll = async (
   execSelectAll: () => Promise<QueryResult>
 ): Promise<Subscriber[]> => {
   const data = await execSelectAll();
-  return data.rows.map(row => new Subscriber(row));
+  return data.rows.map(row => new Subscriber(entitize(row)));
 };
 
 export const createOne = async (
-  execInsertOne: (params: schemable) => Promise<QueryResult>,
+  execInsertOne: (params: any) => Promise<QueryResult>,
   subscriber: Subscriber,
 ) => {
   return await execInsertOne(schemize(subscriber));
@@ -38,5 +36,5 @@ export const findEmail = async (
 ): Promise<Subscriber|null> => {
   const data = await execSelectByEmail();
   if (data.rowCount === 0) return null;
-  return new Subscriber(data.rows[0]);
+  return new Subscriber(entitize(data.rows[0]));
 };
