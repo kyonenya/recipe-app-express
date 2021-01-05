@@ -20,7 +20,7 @@ export const isEmailDuplicated = async (email: string): Promise<boolean> => {
   }) === null);
 };
 
-export const storeSubscriber = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const storeSubscriber = async (req: Request, res: Response): Promise<void> => {
   const subscriber: Subscriber = new Subscriber({
     name: req.body.name,
     email: req.body.email,

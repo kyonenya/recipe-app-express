@@ -49,7 +49,7 @@ const isEmailDuplicated = (email) => __awaiter(void 0, void 0, void 0, function*
     })) === null);
 });
 exports.isEmailDuplicated = isEmailDuplicated;
-const storeSubscriber = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const storeSubscriber = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const subscriber = new subscriberEntity_1.Subscriber({
         name: req.body.name,
         email: req.body.email,

@@ -11,14 +11,14 @@ export class Subscriber {
   public email: string;
   public zipcode: number;
   
-  constructor(props: {
+  constructor({ name, email, zipcode }: {
     name: string;
     email: string;
     zipcode: number;
   }) {
-    this.name = props.name;
-    this.email = props.email;
-    this.zipcode = props.zipcode;
+    this.name = name;
+    this.email = email;
+    this.zipcode = zipcode;
     
     if (!isNameValid(this.name)) throw new Error('不正な名前です');
     if (!isZipCodeValid(this.zipcode)) throw new Error('不正な郵便番号です');
