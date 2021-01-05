@@ -13,17 +13,17 @@ exports.findEmail = exports.createOne = exports.readAll = void 0;
 // ↓useCase should not know about Repository
 // import * as subscriberRepository from './subscriberRepository';
 const subscriberEntity_1 = require("./subscriberEntity");
-const readAll = ({ selectAll, dbExecutor }) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield selectAll(dbExecutor);
+const readAll = (execSelectAll) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = yield execSelectAll();
     return data.rows.map(row => new subscriberEntity_1.Subscriber(row));
 });
 exports.readAll = readAll;
-const createOne = ({ insertOne, dbExecutor, subscriber }) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield insertOne(dbExecutor, subscriber);
+const createOne = (execInsertOne) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield execInsertOne();
 });
 exports.createOne = createOne;
-const findEmail = ({ selectByEmail, dbExecutor, email }) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield selectByEmail(dbExecutor, email);
+const findEmail = (execSelectByEmail) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = yield execSelectByEmail();
     if (data.rowCount === 0)
         return null;
     return new subscriberEntity_1.Subscriber(data.rows[0]);
