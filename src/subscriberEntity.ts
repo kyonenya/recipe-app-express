@@ -7,9 +7,10 @@ export const isZipCodeValid = (zipcode: number): boolean => {
 };
 
 export class Subscriber {
-  public name: string;
-  public email: string;
-  public zipcode: number;
+  // immutablize
+  public readonly name: string;
+  public readonly email: string;
+  public readonly zipcode: number;
   
   constructor({ name, email, zipcode }: {
     name: string;

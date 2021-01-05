@@ -14,7 +14,7 @@ export const selectAll = async (executor: dbExecutable): Promise<QueryResult> =>
 
 export const insertOne = async (executor: dbExecutable, subscriber: Subscriber) => {
   const sql = 'INSERT INTO subscribers (name, email, zipcode) VALUES ($1, $2, $3);';
-  const params = [subscriber.name, subscriber.email, subscriber.zipcode]
+  const params = [subscriber.name, subscriber.email, subscriber.zipcode];
   return await executor(sql, params);
 };
 

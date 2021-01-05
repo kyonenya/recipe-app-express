@@ -1,5 +1,6 @@
 - 高階関数でDI
 - 内側の層でinterfaceを発行して外側の層で実装（契約）
+- DBカラムで大文字が死ぬ問題
 
 CREATE TABLE users (
   firestName VARCHAR(255)
