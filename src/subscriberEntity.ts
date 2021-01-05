@@ -7,12 +7,20 @@ export const isZipCodeValid = (zipcode: number): boolean => {
 };
 
 export class Subscriber {
-  constructor(
-    public name: string, 
-    public email: string, 
-    public zipcode: number
-  ) {
+  public name: string;
+  public email: string;
+  public zipcode: number;
+  
+  constructor({ name, email, zipcode }: {
+    name: string;
+    email: string;
+    zipcode: number;
+  }) {
+    this.name = name;
+    this.email = email;
+    this.zipcode = zipcode;
+    
     if (!isNameValid(this.name)) throw new Error('不正な名前です');
     if (!isZipCodeValid(this.zipcode)) throw new Error('不正な郵便番号です');
-  }
+  };
 };

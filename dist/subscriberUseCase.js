@@ -15,7 +15,7 @@ exports.findEmail = exports.createOne = exports.readAll = void 0;
 const subscriberEntity_1 = require("./subscriberEntity");
 const readAll = ({ selectAll, dbExecutor }) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield selectAll(dbExecutor);
-    return data.rows.map(row => new subscriberEntity_1.Subscriber(row.name, row.email, row.zipcode));
+    return data.rows.map(row => new subscriberEntity_1.Subscriber(row));
 });
 exports.readAll = readAll;
 const createOne = ({ insertOne, dbExecutor, subscriber }) => __awaiter(void 0, void 0, void 0, function* () {
@@ -25,6 +25,6 @@ exports.createOne = createOne;
 const findEmail = ({ selectByEmail, dbExecutor, email }) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield selectByEmail(dbExecutor, email);
     const row = data.rows[0];
-    return new subscriberEntity_1.Subscriber(row.name, row.email, row.zipcode);
+    return new subscriberEntity_1.Subscriber(row);
 });
 exports.findEmail = findEmail;

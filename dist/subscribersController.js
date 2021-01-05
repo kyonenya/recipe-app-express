@@ -50,7 +50,7 @@ const isEmailDuplicated = (email) => __awaiter(void 0, void 0, void 0, function*
 });
 exports.isEmailDuplicated = isEmailDuplicated;
 const storeSubscriber = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const subscriber = new subscriberEntity_1.Subscriber(req.body.name, req.body.email, req.body.zipcode);
+    const subscriber = new subscriberEntity_1.Subscriber(req.body);
     if (yield exports.isEmailDuplicated(subscriber.email)) {
         throw new Error('メールアドレスが既に登録されています');
     }

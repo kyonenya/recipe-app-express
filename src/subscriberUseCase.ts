@@ -9,7 +9,7 @@ export const readAll = async ({ selectAll, dbExecutor }: {
   dbExecutor: dbExecutable;
 }): Promise<Subscriber[]> => {
   const data = await selectAll(dbExecutor);
-  return data.rows.map(row => new Subscriber(row.name, row.email, row.zipcode));
+  return data.rows.map(row => new Subscriber(row));
 };
 
 export const createOne = async ({ insertOne, dbExecutor, subscriber }: {
@@ -27,5 +27,5 @@ export const findEmail = async ({ selectByEmail, dbExecutor, email }: {
 }) => {
   const data = await selectByEmail(dbExecutor, email);
   const row = data.rows[0];
-  return new Subscriber(row.name, row.email, row.zipcode);
+  return new Subscriber(row);
 };

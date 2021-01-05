@@ -10,7 +10,7 @@ const isZipCodeValid = (zipcode) => {
 };
 exports.isZipCodeValid = isZipCodeValid;
 class Subscriber {
-    constructor(name, email, zipcode) {
+    constructor({ name, email, zipcode }) {
         this.name = name;
         this.email = email;
         this.zipcode = zipcode;
@@ -19,6 +19,7 @@ class Subscriber {
         if (!exports.isZipCodeValid(this.zipcode))
             throw new Error('不正な郵便番号です');
     }
+    ;
 }
 exports.Subscriber = Subscriber;
 ;
