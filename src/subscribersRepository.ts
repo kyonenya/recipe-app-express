@@ -34,3 +34,13 @@ export const selectByEmail = async (dbExecutor: dbExecutable, email: string): Pr
   if (queryResult.rowCount === 0) return null;
   return new Subscriber(entitize(queryResult.rows[0]));
 };
+
+interface ISubscriberRepository {
+  selectAll(dbExecutor: dbExecutable): Promise<Subscriber[]>;
+  insertOne(dbExecutor: dbExecutable, subscriber: schemable): Promise<boolean>;
+  selectByEmail(dbExecutor: dbExecutable, email: string): Promise<Subscriber|null>
+};
+
+const repository: ISubscriberRepository = {
+  selectAll, insertOne, selectByEmail,
+};

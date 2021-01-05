@@ -37,3 +37,7 @@ const selectByEmail = (dbExecutor, email) => __awaiter(void 0, void 0, void 0, f
     return new subscriberEntity_1.Subscriber(entitize(queryResult.rows[0]));
 });
 exports.selectByEmail = selectByEmail;
+;
+const repository = {
+    selectAll: exports.selectAll, insertOne: exports.insertOne, selectByEmail: exports.selectByEmail,
+};
