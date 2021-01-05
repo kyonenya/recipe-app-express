@@ -2,6 +2,10 @@
 // import * as subscriberRepository from './subscriberRepository';
 import { Subscriber } from './subscriberEntity';
 import { dbExecutable } from './subscriberRepository';
+/** 
+ * @deprecated
+ * UseCase should receive pure Entity. So should not know anout QueryResult.
+ */
 import { QueryResult } from 'pg';
 
 export const readAll = async (

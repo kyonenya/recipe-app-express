@@ -10,7 +10,9 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Name</th>
+      <!-- <th>Name</th> -->
+      <th>firstName</th>
+      <th>lastName</th>
       <th>Email</th>
       <th>Zip Code</th>
     </tr>
@@ -18,8 +20,16 @@
   <tbody>
     <% users.forEach(user => { %>
     <tr>
+    <!--
       <td>
         <%= user.fullName %>
+      </td>
+    -->
+      <td>
+        <%= user.firstName %>
+      </td>
+      <td>
+        <%= user.lastName %>
       </td>
       <td>
         <%= user.email %>

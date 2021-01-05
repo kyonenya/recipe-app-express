@@ -9,8 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.readAll = void 0;
-const readAll = (execSelectAll) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield execSelectAll();
+exports.selectAll = void 0;
+const selectAll = (dbExecutor) => __awaiter(void 0, void 0, void 0, function* () {
+    const sql = 'SELECT * FROM users';
+    return yield dbExecutor(sql);
 });
-exports.readAll = readAll;
+exports.selectAll = selectAll;

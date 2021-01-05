@@ -1,6 +1,13 @@
+import * as userUseCase from './userUseCase';
+import * as usersRepository from './usersRepository';
+import * as postgres from './postgres';
 import { Request, Response, NextFunction } from 'express';
 
 export const index = async (req: Request, res: Response) => {
+  const users = await userUseCase.readAll(
+    () => usersRepository.selectAll(postgres.execute)
+  );
+  console.log(users.rows);
   const dummyUsers = [
     {
       fullName: 'Robert C. Martin',
@@ -8,5 +15,5 @@ export const index = async (req: Request, res: Response) => {
       zipcode: 12345,
     }
   ];
-  res.render('users/index', { users: dummyUsers });
+  res.render('users/index', { users: users.rows });
 };
