@@ -18,7 +18,8 @@ exports.selectAll = selectAll;
 const insertOne = (executor, subscriber) => __awaiter(void 0, void 0, void 0, function* () {
     const sql = 'INSERT INTO subscribers (name, email, zipcode) VALUES ($1, $2, $3);';
     const params = [subscriber.name, subscriber.email, subscriber.zipCode];
-    return yield executor(sql, params);
+    const queryResult = yield executor(sql, params);
+    return queryResult.rowCount === 1;
 });
 exports.insertOne = insertOne;
 const selectByEmail = (executor, email) => __awaiter(void 0, void 0, void 0, function* () {

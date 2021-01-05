@@ -26,9 +26,10 @@ export const storeSubscriber = async (req: Request, res: Response): Promise<void
   if (await isEmailDuplicated(req.body.email)) {
     throw new Error('メールアドレスが既に登録されています');
   }
-  const response = await subscriberUseCase.createOne(
+  const isSucceeded = await subscriberUseCase.createOne(
     (params) => subscribersRepository.insertOne(postgres.execute, params),
     subscriber,
   );
+  if (!isSucceeded) throw new Error('お手数ですがもう一度入力し直してください');
   res.render('thanks');
 };

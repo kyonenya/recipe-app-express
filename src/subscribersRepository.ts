@@ -1,8 +1,6 @@
 import { Subscriber } from './subscriberEntity';
 import { dbExecutable } from './repository';
 import { QueryResult } from 'pg';
-// ↓Repository should not know about Framework Layer
-// import * as postgres from './postgres';
 
 // schema
 export type schemable = {
@@ -16,10 +14,11 @@ export const selectAll = async (executor: dbExecutable): Promise<QueryResult> =>
   return await executor(sql);
 };
 
-export const insertOne = async (executor: dbExecutable, subscriber: Subscriber) => {
+export const insertOne = async (executor: dbExecutable, subscriber: Subscriber): Promise<boolean> => {
   const sql = 'INSERT INTO subscribers (name, email, zipcode) VALUES ($1, $2, $3);';
   const params = [subscriber.name, subscriber.email, subscriber.zipCode];
-  return await executor(sql, params);
+  const queryResult = await executor(sql, params);
+  return queryResult.rowCount === 1;
 };
 
 export const selectByEmail = async (executor: dbExecutable, email: string): Promise<QueryResult> => {

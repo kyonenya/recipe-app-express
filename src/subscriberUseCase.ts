@@ -25,7 +25,7 @@ export const readAll = async (
 };
 
 export const createOne = async (
-  execInsertOne: (params: any) => Promise<QueryResult>,
+  execInsertOne: (params: any) => Promise<boolean>,
   subscriber: Subscriber,
 ) => {
   return await execInsertOne(schemize(subscriber));

@@ -5,6 +5,9 @@
 - UseCase should not know about Repository.
 // import * as subscriberRepository from './subscriberRepository';
 
+- Repository should not know about Infrastructure Layer.
+// import * as postgres from './postgres';
+
 CREATE TABLE users (
   firestName VARCHAR(255)
   ,lastName VARCHAR(255)

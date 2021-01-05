@@ -51,7 +51,9 @@ const storeSubscriber = (req, res) => __awaiter(void 0, void 0, void 0, function
     if (yield exports.isEmailDuplicated(req.body.email)) {
         throw new Error('メールアドレスが既に登録されています');
     }
-    const response = yield subscriberUseCase.createOne((params) => subscribersRepository.insertOne(postgres.execute, params), subscriber);
+    const isSucceeded = yield subscriberUseCase.createOne((params) => subscribersRepository.insertOne(postgres.execute, params), subscriber);
+    if (!isSucceeded)
+        throw new Error('お手数ですがもう一度入力し直してください');
     res.render('thanks');
 });
 exports.storeSubscriber = storeSubscriber;
