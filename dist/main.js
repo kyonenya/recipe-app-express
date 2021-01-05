@@ -25,10 +25,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const express_ejs_layouts_1 = __importDefault(require("express-ejs-layouts"));
 const homeController = __importStar(require("./homeController"));
+const userController = __importStar(require("./userContoroller"));
 const subscribersController = __importStar(require("./subscribersController"));
 const errorController = __importStar(require("./errorController"));
 const app = express_1.default();
-app.set('port', process.env['WEB_APP_PORT'] || 3000);
+app.set('port', /* process.env['WEB_APP_PORT'] || */ 3000);
 // enable ejs
 app
     .set('view engine', 'ejs')
@@ -48,7 +49,8 @@ app
     .get('/courses', homeController.showCourses)
     .get('/contact', (req, res) => homeController.render('contact', req, res))
     .post('/subscribe', asyncer(subscribersController.storeSubscriber))
-    .get('/subscribers', asyncer(subscribersController.showAllSubscribers));
+    .get('/subscribers', asyncer(subscribersController.showAllSubscribers))
+    .get('/users', asyncer(userController.index));
 // catch errors
 app
     .use(errorController.notFound)

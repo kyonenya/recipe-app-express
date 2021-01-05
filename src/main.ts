@@ -1,11 +1,12 @@
 import express, { NextFunction } from 'express';
 import layouts from 'express-ejs-layouts';
 import * as homeController from './homeController';
+import * as userController from './userContoroller';
 import * as subscribersController from './subscribersController';
 import * as errorController from './errorController';
 
 const app = express();
-app.set('port', process.env['WEB_APP_PORT'] || 3000);
+app.set('port', /* process.env['WEB_APP_PORT'] || */ 3000);
 
 // enable ejs
 app
@@ -30,6 +31,8 @@ app
   .get('/contact', (req, res) => homeController.render('contact', req, res))
   .post('/subscribe', asyncer(subscribersController.storeSubscriber))
   .get('/subscribers', asyncer(subscribersController.showAllSubscribers))
+  .get('/users', asyncer(userController.index))
+  ;
 
 // catch errors
 app

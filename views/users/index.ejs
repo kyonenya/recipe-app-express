@@ -1,0 +1,33 @@
+<h2>Users Table</h2>
+<style>
+  body {
+    font-size: 85%;
+  }
+  .table {
+    width: 100vw;
+  }
+</style>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Zip Code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% users.forEach(user => { %>
+    <tr>
+      <td>
+        <%= user.fullName %>
+      </td>
+      <td>
+        <%= user.email %>
+      </td>
+      <td>
+        <%= user.zipcode %>
+      </td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
