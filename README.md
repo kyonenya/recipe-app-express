@@ -1,17 +1,20 @@
+## Clean Architecture
+
 - 高階関数でDI
 - 内側の層でinterfaceを発行して外側の層で実装（契約）
-- DBカラムで大文字が死ぬ問題
+- Repository－UseCase間でやり取りするデータはentitize<->schemize関数で変換
+（DBのカラムとEntityのプロパティ名や構造が食い違ってしまう問題への対応）
 
 
-## 責務違反の記録
+## 責務違反の記録（古い順）
 
 - UseCase should not know about Repository.
-// import * as subscriberRepository from './subscriberRepository';
+// import * as subscribersRepository from './subscribersRepository';
 
 - Repository should not know about Infrastructure Layer.
 // import * as postgres from './postgres';
 
-- UseCase should receive pure Entity, and should not know anout QueryResult.
+- UseCase should not know anout QueryResult, so should not receive it as a return value of Repository. Instead, receive pure Entity.
 // import { QueryResult } from 'pg';
 
 - UseCase need not to know Repository at all, by injencting dbExecutor in Controller and not in UseCase.
