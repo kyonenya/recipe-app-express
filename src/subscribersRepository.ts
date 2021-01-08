@@ -14,7 +14,7 @@ const entitize = ({ name, email, zipcode }: schemable): Subscriber => {
   return { name, email, zipCode: zipcode };
 };
 
-export const selectAll = async (dbExecutor: dbExecutable): Promise<Subscriber[]> => {
+export const selectAll = async ({ dbExecutor }: { dbExecutor: dbExecutable }): Promise<Subscriber[]> => {
   const sql = 'SELECT * FROM subscribers';
   const queryResult = await dbExecutor(sql);
   return queryResult.rows.map((row: any) => entitize(row));
@@ -33,14 +33,4 @@ export const selectByEmail = async (dbExecutor: dbExecutable, email: string): Pr
   const queryResult = await dbExecutor(sql, params);
   if (queryResult.rowCount === 0) return null;
   return new Subscriber(entitize(queryResult.rows[0]));
-};
-
-interface ISubscriberRepository {
-  selectAll(dbExecutor: dbExecutable): Promise<Subscriber[]>;
-  insertOne(dbExecutor: dbExecutable, subscriber: schemable): Promise<boolean>;
-  selectByEmail(dbExecutor: dbExecutable, email: string): Promise<Subscriber|null>
-};
-
-const repository: ISubscriberRepository = {
-  selectAll, insertOne, selectByEmail,
 };

@@ -15,7 +15,7 @@ const subscriberEntity_1 = require("./subscriberEntity");
 const entitize = ({ name, email, zipcode }) => {
     return { name, email, zipCode: zipcode };
 };
-const selectAll = (dbExecutor) => __awaiter(void 0, void 0, void 0, function* () {
+const selectAll = ({ dbExecutor }) => __awaiter(void 0, void 0, void 0, function* () {
     const sql = 'SELECT * FROM subscribers';
     const queryResult = yield dbExecutor(sql);
     return queryResult.rows.map((row) => entitize(row));
@@ -37,7 +37,3 @@ const selectByEmail = (dbExecutor, email) => __awaiter(void 0, void 0, void 0, f
     return new subscriberEntity_1.Subscriber(entitize(queryResult.rows[0]));
 });
 exports.selectByEmail = selectByEmail;
-;
-const repository = {
-    selectAll: exports.selectAll, insertOne: exports.insertOne, selectByEmail: exports.selectByEmail,
-};
