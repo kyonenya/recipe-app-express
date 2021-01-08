@@ -17,3 +17,9 @@ export const index = async (req: Request, res: Response) => {
   ];
   res.render('users/index', { users: users.rows });
 };
+
+export const storeSubscriber = (req: Request, res: Response) => {
+  
+};
+
+

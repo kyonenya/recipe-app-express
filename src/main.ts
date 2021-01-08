@@ -32,6 +32,7 @@ app
   .post('/subscribe', asyncer(subscriberController.storeSubscriber))
   .get('/subscribers', asyncer(subscriberController.showAllSubscribers))
   .get('/users', asyncer(userController.index))
+  .get('/users/new', (req, res) => homeController.render('users/new', req, res))
   ;
 
 // catch errors

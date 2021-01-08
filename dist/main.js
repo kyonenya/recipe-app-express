@@ -50,7 +50,8 @@ app
     .get('/contact', (req, res) => homeController.render('contact', req, res))
     .post('/subscribe', asyncer(subscriberController.storeSubscriber))
     .get('/subscribers', asyncer(subscriberController.showAllSubscribers))
-    .get('/users', asyncer(userController.index));
+    .get('/users', asyncer(userController.index))
+    .get('/users/new', (req, res) => homeController.render('users/new', req, res));
 // catch errors
 app
     .use(errorController.notFound)

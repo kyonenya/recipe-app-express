@@ -28,7 +28,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.index = void 0;
+exports.storeSubscriber = exports.index = void 0;
 const userUseCase = __importStar(require("./userUseCase"));
 const usersRepository = __importStar(require("./usersRepository"));
 const postgres = __importStar(require("./postgres"));
@@ -45,3 +45,6 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.render('users/index', { users: users.rows });
 });
 exports.index = index;
+const storeSubscriber = (req, res) => {
+};
+exports.storeSubscriber = storeSubscriber;
