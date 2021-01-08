@@ -21,7 +21,6 @@ const selectAll = (dbExecutor) => __awaiter(void 0, void 0, void 0, function* ()
     return queryResult.rows.map((row) => entitize(row));
 });
 exports.selectAll = selectAll;
-;
 const insertOne = (dbExecutor, subscriber) => __awaiter(void 0, void 0, void 0, function* () {
     const sql = 'INSERT INTO subscribers (name, email, zipcode) VALUES ($1, $2, $3);';
     const params = [subscriber.name, subscriber.email, subscriber.zipcode];

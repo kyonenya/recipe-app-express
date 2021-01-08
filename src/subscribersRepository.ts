@@ -20,11 +20,7 @@ export const selectAll = async (dbExecutor: dbExecutable): Promise<Subscriber[]>
   return queryResult.rows.map((row: any) => entitize(row));
 };
 
-interface IInsertOne {
-  (dbExecutor?: dbExecutable, subscriber: schemable): Promise<boolean>
-};
-
-export const insertOne: IInsertOne = async (dbExecutor?: dbExecutable, subscriber: schemable): Promise<boolean> => {
+export const insertOne = async (dbExecutor: dbExecutable, subscriber: schemable): Promise<boolean> => {
   const sql = 'INSERT INTO subscribers (name, email, zipcode) VALUES ($1, $2, $3);';
   const params = [subscriber.name, subscriber.email, subscriber.zipcode];
   const queryResult = await dbExecutor(sql, params);
