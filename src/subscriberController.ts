@@ -6,7 +6,7 @@ import { Request, Response, NextFunction } from 'express';
 
 export const showAllSubscribers = async (req: Request, res: Response) => {
   const subscribers = await subscriberUseCase.readAll(
-    () => subscribersRepository.selectAll({ dbExecutor: postgres.execute })
+    await subscribersRepository.selectAll(postgres.execute)
   );
   res.render('subscribers', { subscribers });
 };

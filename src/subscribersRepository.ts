@@ -1,6 +1,7 @@
 import { Subscriber } from './subscriberEntity';
 import { dbExecutable } from './repository';
 import { QueryResult } from 'pg';
+import { IReadAll } from './subscriberUseCase';
 
 // DB schema
 export interface schemable {
@@ -14,10 +15,12 @@ const entitize = ({ name, email, zipcode }: schemable): Subscriber => {
   return { name, email, zipCode: zipcode };
 };
 
-export const selectAll = async ({ dbExecutor }: { dbExecutor: dbExecutable }): Promise<Subscriber[]> => {
-  const sql = 'SELECT * FROM subscribers';
-  const queryResult = await dbExecutor(sql);
-  return queryResult.rows.map((row: any) => entitize(row));
+export const selectAll = async (dbExecutor: dbExecutable): Promise<IReadAll> => {
+  return async () => {
+    const sql = 'SELECT * FROM subscribers';
+    const queryResult = await dbExecutor(sql);
+    return queryResult.rows.map((row: any) => entitize(row));
+  };
 };
 
 export const insertOne = async (dbExecutor: dbExecutable, subscriber: schemable): Promise<boolean> => {

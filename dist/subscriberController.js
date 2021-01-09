@@ -34,7 +34,7 @@ const postgres = __importStar(require("./postgres"));
 const subscribersRepository = __importStar(require("./subscribersRepository"));
 const subscriberUseCase = __importStar(require("./subscriberUseCase"));
 const showAllSubscribers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const subscribers = yield subscriberUseCase.readAll(() => subscribersRepository.selectAll({ dbExecutor: postgres.execute }));
+    const subscribers = yield subscriberUseCase.readAll(yield subscribersRepository.selectAll(postgres.execute));
     res.render('subscribers', { subscribers });
 });
 exports.showAllSubscribers = showAllSubscribers;

@@ -14,8 +14,9 @@ exports.findEmail = exports.createOne = exports.readAll = void 0;
 const schemize = ({ name, email, zipCode }) => {
     return { name, email, zipcode: zipCode };
 };
-const readAll = (execSelectAll) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield execSelectAll();
+;
+const readAll = (invokeReadAll) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield invokeReadAll();
 });
 exports.readAll = readAll;
 const createOne = (execInsertOne, subscriber) => __awaiter(void 0, void 0, void 0, function* () {

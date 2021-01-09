@@ -6,10 +6,13 @@ const schemize = ({ name, email, zipCode }: Subscriber): schemable => {
   return { name, email, zipcode: zipCode };
 };
 
+export interface IReadAll {
+  (): Promise<Subscriber[]>
+};
 export const readAll = async (
-  execSelectAll: () => Promise<Subscriber[]>
+  invokeReadAll: IReadAll
 ): Promise<Subscriber[]> => {
-  return await execSelectAll();
+  return await invokeReadAll();
 };
 
 export const createOne = async (

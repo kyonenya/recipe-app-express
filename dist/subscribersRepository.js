@@ -15,10 +15,12 @@ const subscriberEntity_1 = require("./subscriberEntity");
 const entitize = ({ name, email, zipcode }) => {
     return { name, email, zipCode: zipcode };
 };
-const selectAll = ({ dbExecutor }) => __awaiter(void 0, void 0, void 0, function* () {
-    const sql = 'SELECT * FROM subscribers';
-    const queryResult = yield dbExecutor(sql);
-    return queryResult.rows.map((row) => entitize(row));
+const selectAll = (dbExecutor) => __awaiter(void 0, void 0, void 0, function* () {
+    return () => __awaiter(void 0, void 0, void 0, function* () {
+        const sql = 'SELECT * FROM subscribers';
+        const queryResult = yield dbExecutor(sql);
+        return queryResult.rows.map((row) => entitize(row));
+    });
 });
 exports.selectAll = selectAll;
 const insertOne = (dbExecutor, subscriber) => __awaiter(void 0, void 0, void 0, function* () {
