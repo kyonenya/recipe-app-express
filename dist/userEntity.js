@@ -7,6 +7,7 @@ class User {
     //  public readonly updatedAt = null;
     constructor({ name, email, zipcode }) {
         this.name = name;
+        this.fullName = name.firstName + name.lastName;
         this.email = email;
         this.zipcode = zipcode;
     }

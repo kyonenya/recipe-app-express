@@ -33,6 +33,7 @@ app
   .get('/subscribers', asyncer(subscriberController.showAllSubscribers))
   .get('/users', asyncer(userController.index))
   .get('/users/new', (req, res) => homeController.render('users/new', req, res))
+  .get('/users/:email/edit', asyncer(userController.edit))
   ;
 
 // catch errors

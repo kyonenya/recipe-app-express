@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.selectAll = void 0;
+exports.selectByEmail = exports.selectAll = void 0;
 const userEntity_1 = require("./userEntity");
 const entitize = (row) => {
     return new userEntity_1.User({
@@ -27,3 +27,12 @@ const selectAll = (dbExecutor) => __awaiter(void 0, void 0, void 0, function* ()
     return queryResult.rows.map((row) => entitize(row));
 });
 exports.selectAll = selectAll;
+const selectByEmail = (dbExecutor) => (email) => __awaiter(void 0, void 0, void 0, function* () {
+    const sql = 'SELECT * FROM users WHERE "email" = $1';
+    const params = [email];
+    const queryResult = yield dbExecutor(sql, params);
+    if (queryResult.rowCount === 0)
+        return null;
+    return entitize(queryResult.rows[0]);
+});
+exports.selectByEmail = selectByEmail;

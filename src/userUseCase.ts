@@ -7,3 +7,13 @@ export const readAll = async (
 ) => {
   return await execSelectAll();
 };
+
+export interface IFindByEmail {
+  (email: string): Promise<User|null>
+}
+export const findByEmail = async (
+  invokeFindByEmail: IFindByEmail,
+  email: string
+) => {
+  return await invokeFindByEmail(email);
+}

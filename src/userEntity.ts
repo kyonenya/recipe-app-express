@@ -1,5 +1,6 @@
 export class User {
   public readonly name: { firstName: string, lastName: string };
+  public readonly fullName: string;
   public readonly email: string;
   public readonly zipcode: string;
 //  public readonly password = null;
@@ -12,6 +13,7 @@ export class User {
     zipcode: string;
   }) {
     this.name = name;
+    this.fullName = name.firstName + name.lastName;
     this.email = email;
     this.zipcode = zipcode;
   };

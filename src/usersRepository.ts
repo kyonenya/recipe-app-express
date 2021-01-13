@@ -1,4 +1,5 @@
 import { User } from './userEntity';
+import { IFindByEmail } from './userUseCase';
 import { dbExecutable } from './repository';
 import { QueryResult } from 'pg';
 
@@ -25,3 +26,11 @@ export const selectAll = async (dbExecutor: dbExecutable): Promise<User[]> => {
   const queryResult = await dbExecutor(sql);
   return queryResult.rows.map((row) => entitize(row));
 };
+
+export const selectByEmail = (dbExecutor: dbExecutable): IFindByEmail => async (email: string) => {
+  const sql = 'SELECT * FROM users WHERE "email" = $1';
+  const params = [email];
+  const queryResult = await dbExecutor(sql, params);
+  if (queryResult.rowCount === 0) return null;
+  return entitize(queryResult.rows[0]);
+}

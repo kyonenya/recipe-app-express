@@ -7,25 +7,34 @@
     width: 100vw;
   }
 </style>
+<h2>Users Table</h2>
 <table class="table">
   <thead>
     <tr>
       <th>Name</th>
       <th>Email</th>
       <th>Zip Code</th>
+      <th>Edit</th>
     </tr>
   </thead>
   <tbody>
     <% users.forEach(user => { %>
     <tr>
-     <td>
-        <%= user.name.firstName + user.name.lastName %>
+      <td>
+        <a href="<%= `/users/${user._id}` %>">
+          <%= user.fullName %>
+        </a>
       </td>
       <td>
         <%= user.email %>
       </td>
       <td>
-        <%= user.zipcode %>
+        <%= user.zipCode %>
+      </td>
+      <td>
+        <a href="<%=`/users/${user.email}/edit`%>">
+          Edit
+        </a>
       </td>
     </tr>
     <% }); %>
