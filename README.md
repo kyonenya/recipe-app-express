@@ -2,9 +2,13 @@
 
 - 高階関数でDI
 - 内側の層でinterfaceを発行して外側の層で実装（契約）
-- Repository－UseCase間でやり取りするデータはentitize<->schemize関数で変換
+- Repository－UseCase間でやり取りするデータはentitize<->schemize（DTO）関数で変換
 （DBのカラムとEntityのプロパティ名や構造が食い違ってしまう問題への対応）
 
+## 部分適用を用いたinvokerパターン
+
+- ControllerはRepositoryに対してdbExecutableを設定し、それを受けてRepositoryは（SQL文やパラメータ計算処理がカプセル化された）invokerを返す。UseCaseは中身を知らずにそれを押すだけ。
+- UseCaseからinterfaceを発行し、Repositoryがその設計書通りのinvokerを設定してUseCaseに返す。interfaceは抽象層が発行し、具体層がその契約通りに実装する。別の観点から言えば、自分に合わせて欲しい側が相手に発行する。
 
 ## 責務違反の記録（古い順）
 
@@ -19,7 +23,6 @@
 
 - UseCase need not to know Repository at all, by injencting dbExecutor in Controller and not in UseCase.  
 // import { dbExecutable } from './repository';
-
 
 ## SQL
 

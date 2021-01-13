@@ -10,8 +10,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.selectAll = void 0;
+const userEntity_1 = require("./userEntity");
+const entitize = (row) => {
+    return new userEntity_1.User({
+        name: {
+            firstName: row.firstname,
+            lastName: row.lastname,
+        },
+        email: row.email,
+        zipcode: row.email,
+    });
+};
 const selectAll = (dbExecutor) => __awaiter(void 0, void 0, void 0, function* () {
     const sql = 'SELECT * FROM users';
-    return yield dbExecutor(sql);
+    const queryResult = yield dbExecutor(sql);
+    return queryResult.rows.map((row) => entitize(row));
 });
 exports.selectAll = selectAll;

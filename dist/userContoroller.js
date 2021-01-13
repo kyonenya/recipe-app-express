@@ -34,15 +34,7 @@ const usersRepository = __importStar(require("./usersRepository"));
 const postgres = __importStar(require("./postgres"));
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield userUseCase.readAll(() => usersRepository.selectAll(postgres.execute));
-    console.log(users.rows);
-    const dummyUsers = [
-        {
-            fullName: 'Robert C. Martin',
-            email: 'r-martin@gmail.com',
-            zipcode: 12345,
-        }
-    ];
-    res.render('users/index', { users: users.rows });
+    res.render('users/index', { users });
 });
 exports.index = index;
 const storeSubscriber = (req, res) => {
