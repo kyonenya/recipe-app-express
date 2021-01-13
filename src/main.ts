@@ -1,5 +1,6 @@
 import express, { NextFunction } from 'express';
 import layouts from 'express-ejs-layouts';
+import methodOverride from 'method-override';
 import * as homeController from './homeController';
 import * as userController from './userContoroller';
 import * as subscriberController from './subscriberController';
@@ -12,11 +13,12 @@ app.set('port', /* process.env['WEB_APP_PORT'] || */ 3000);
 app
   .set('view engine', 'ejs')
   .use(layouts);
-
 // analyze request body
 app
   .use(express.urlencoded({ extended: false }))
   .use(express.json());
+// PUT DELETE
+app.use(methodOverride('_method', { methods: ['POST', 'GET']} ));
 
 // async wrapper
 const asyncer = (fn: any) => (req: any, res: any, next: any) => {
@@ -31,9 +33,10 @@ app
   .get('/contact', (req, res) => homeController.render('contact', req, res))
   .post('/subscribe', asyncer(subscriberController.storeSubscriber))
   .get('/subscribers', asyncer(subscriberController.showAllSubscribers))
-  .get('/users', asyncer(userController.index))
+  .get('/users', asyncer(userController.showAllUsers))
   .get('/users/new', (req, res) => homeController.render('users/new', req, res))
-  .get('/users/:email/edit', asyncer(userController.edit))
+  .get('/users/:email/edit', asyncer(userController.showEditForm))
+  .put('/users/:email/update', asyncer(userController.putUser))
   ;
 
 // catch errors

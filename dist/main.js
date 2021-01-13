@@ -24,6 +24,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const express_ejs_layouts_1 = __importDefault(require("express-ejs-layouts"));
+const method_override_1 = __importDefault(require("method-override"));
 const homeController = __importStar(require("./homeController"));
 const userController = __importStar(require("./userContoroller"));
 const subscriberController = __importStar(require("./subscriberController"));
@@ -38,6 +39,8 @@ app
 app
     .use(express_1.default.urlencoded({ extended: false }))
     .use(express_1.default.json());
+// PUT DELETE
+app.use(method_override_1.default('_method', { methods: ['POST', 'GET'] }));
 // async wrapper
 const asyncer = (fn) => (req, res, next) => {
     return fn(req, res, next).catch(next);
@@ -50,9 +53,10 @@ app
     .get('/contact', (req, res) => homeController.render('contact', req, res))
     .post('/subscribe', asyncer(subscriberController.storeSubscriber))
     .get('/subscribers', asyncer(subscriberController.showAllSubscribers))
-    .get('/users', asyncer(userController.index))
+    .get('/users', asyncer(userController.showAllUsers))
     .get('/users/new', (req, res) => homeController.render('users/new', req, res))
-    .get('/users/:email/edit', asyncer(userController.edit));
+    .get('/users/:email/edit', asyncer(userController.showEditForm))
+    .put('/users/:email/update', asyncer(userController.putUser));
 // catch errors
 app
     .use(errorController.notFound)

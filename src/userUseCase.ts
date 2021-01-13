@@ -17,3 +17,13 @@ export const findByEmail = async (
 ) => {
   return await invokeFindByEmail(email);
 }
+
+export interface IUpdate {
+  (user: User): Promise<boolean>;
+}
+export const update = async (
+  invokeUpdate: IUpdate,
+  user: User,
+) => {
+  return await invokeUpdate(user);
+};

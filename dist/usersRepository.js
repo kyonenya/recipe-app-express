@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.selectByEmail = exports.selectAll = void 0;
+exports.update = exports.selectByEmail = exports.selectAll = void 0;
 const userEntity_1 = require("./userEntity");
 const entitize = (row) => {
     return new userEntity_1.User({
@@ -36,3 +36,21 @@ const selectByEmail = (dbExecutor) => (email) => __awaiter(void 0, void 0, void 
     return entitize(queryResult.rows[0]);
 });
 exports.selectByEmail = selectByEmail;
+const update = (dbExecutor) => (user) => __awaiter(void 0, void 0, void 0, function* () {
+    const sql = `
+    UPDATE users
+    SET
+      "firstname" = $2
+      ,"lastname" = $3
+      ,"zipcode" = $4
+      ,"password" = $5
+    WHERE email = $1;
+  `;
+    const params = [user.email, user.name.firstName, user.name.lastName, user.zipcode, user.password];
+    const queryResult = yield dbExecutor(sql, params);
+    console.log(user);
+    console.log(params);
+    console.log(queryResult);
+    return queryResult.rowCount === 1;
+});
+exports.update = update;

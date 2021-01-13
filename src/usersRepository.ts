@@ -1,5 +1,5 @@
 import { User } from './userEntity';
-import { IFindByEmail } from './userUseCase';
+import { IFindByEmail, IUpdate } from './userUseCase';
 import { dbExecutable } from './repository';
 import { QueryResult } from 'pg';
 
@@ -34,3 +34,21 @@ export const selectByEmail = (dbExecutor: dbExecutable): IFindByEmail => async (
   if (queryResult.rowCount === 0) return null;
   return entitize(queryResult.rows[0]);
 }
+
+export const update = (dbExecutor: dbExecutable): IUpdate => async (user: User) => {
+  const sql = `
+    UPDATE users
+    SET
+      "firstname" = $2
+      ,"lastname" = $3
+      ,"zipcode" = $4
+      ,"password" = $5
+    WHERE email = $1;
+  `;
+  const params = [user.email, user.name.firstName, user.name.lastName, user.zipcode, user.password];
+  const queryResult = await dbExecutor(sql, params);
+  console.log(user);
+  console.log(params);
+  console.log(queryResult);
+  return queryResult.rowCount === 1;
+};

@@ -28,21 +28,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.storeSubscriber = exports.edit = exports.index = void 0;
+exports.putUser = exports.showEditForm = exports.showAllUsers = void 0;
+const userEntity_1 = require("./userEntity");
 const userUseCase = __importStar(require("./userUseCase"));
 const usersRepository = __importStar(require("./usersRepository"));
 const postgres = __importStar(require("./postgres"));
-const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const showAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield userUseCase.readAll(() => usersRepository.selectAll(postgres.execute));
     res.render('users/index', { users });
 });
-exports.index = index;
-const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.showAllUsers = showAllUsers;
+const showEditForm = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const email = req.params.email;
     const user = yield userUseCase.findByEmail(usersRepository.selectByEmail(postgres.execute), email);
     res.render('users/edit', { user });
 });
-exports.edit = edit;
-const storeSubscriber = (req, res) => {
-};
-exports.storeSubscriber = storeSubscriber;
+exports.showEditForm = showEditForm;
+const putUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.params);
+    const user = new userEntity_1.User({
+        name: { firstName: req.body.first, lastName: req.body.last },
+        email: req.params.email,
+        zipcode: req.body.zipCode,
+        password: req.body.password,
+    });
+    console.log('Controller', user);
+    const result = yield userUseCase.update(usersRepository.update(postgres.execute), user);
+    res.redirect('/users');
+});
+exports.putUser = putUser;

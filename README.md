@@ -65,3 +65,9 @@ INSERT INTO contacts (
   ,'hand.invisible@wealth.com'
   ,'177639'
 );
+
+UPDATE users
+SET
+  firstname = 'John'
+  ,lastname =  'Smith'
+WHERE email = 'jon@jonwexler.com';

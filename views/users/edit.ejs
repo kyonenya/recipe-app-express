@@ -1,5 +1,5 @@
 <div class="data-form">
-  <form class="form-signin" method="POST" action="<%=`/users/${user._id}/update?_method=PUT`%>">
+  <form class="form-signin" method="POST" action="<%=`/users/${user.email}/update?_method=PUT`%>">
     <h2>Edit user:</h2>
     <label for="inputFirstName">First Name</label>
     <input class="form-control" type="text" name="first" id="inputFirstName" value="<%= user.name.firstName %>" placeholder="First" autofocus>
