@@ -48,7 +48,7 @@ export const insertOne = (dbExecutor: dbExecutable): ICreateOne => async (user: 
   try {
     const queryResult = await dbExecutor(sql, params);
     if (queryResult.rowCount !== 1) return Left.of('DB Error: Insertion failed.');
-    return Right.of('Successfully inserted.');
+    return Right.of(true);
   } catch (err) {
     return Left.of(err);
   };

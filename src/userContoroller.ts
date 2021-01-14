@@ -1,4 +1,5 @@
 import { User } from './userEntity';
+import { Either, Left, Right, ofEither } from './monad';
 import * as userUseCase from './userUseCase';
 import * as usersRepository from './usersRepository';
 import * as postgres from './postgres';
@@ -29,11 +30,18 @@ export const showEditForm = async (req: Request, res: Response) => {
 
 export const createUser = async (req: Request, res: Response) => {
   const invokeCreateOne: userUseCase.ICreateOne = usersRepository.insertOne(postgres.execute);
-  // TODO: chain
-  const user = entitizeRequest(req);
-  const either = await invokeCreateOne(user);
-  either.map((x) => console.log(x));
-  res.redirect('/users');
+  // TODO: resolve Promise in chain
+  Right.of(req)
+    .map(entitizeRequest)
+    .map(await invokeCreateOne)
+    .map(await console.log)
+    .map(await (_ => res.redirect('/users')))
+    .orElse(await console.error);
+
+//  const user = entitizeRequest(req);
+//  const either = await invokeCreateOne(user);
+//  either.map((x) => console.log(x));
+//  res.redirect('/users');
 };
 
 export const putUser = async (req: Request, res: Response) => {

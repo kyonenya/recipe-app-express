@@ -30,6 +30,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.putUser = exports.createUser = exports.showEditForm = exports.showAllUsers = void 0;
 const userEntity_1 = require("./userEntity");
+const monad_1 = require("./monad");
 const userUseCase = __importStar(require("./userUseCase"));
 const usersRepository = __importStar(require("./usersRepository"));
 const postgres = __importStar(require("./postgres"));
@@ -53,10 +54,16 @@ exports.showEditForm = showEditForm;
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const invokeCreateOne = usersRepository.insertOne(postgres.execute);
     // TODO: chain
-    const user = entitizeRequest(req);
-    const either = yield invokeCreateOne(user);
-    either.map((x) => console.log(x));
-    res.redirect('/users');
+    monad_1.Right.of(req)
+        .map(entitizeRequest)
+        .map(yield (invokeCreateOne))
+        .map(yield (console.log))
+        .map(yield (_ => res.redirect('/users')))
+        .orElse(yield (console.error));
+    //  const user = entitizeRequest(req);
+    //  const either = await invokeCreateOne(user);
+    //  either.map((x) => console.log(x));
+    //  res.redirect('/users');
 });
 exports.createUser = createUser;
 const putUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

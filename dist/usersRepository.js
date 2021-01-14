@@ -50,7 +50,7 @@ const insertOne = (dbExecutor) => (user) => __awaiter(void 0, void 0, void 0, fu
         const queryResult = yield dbExecutor(sql, params);
         if (queryResult.rowCount !== 1)
             return monad_1.Left.of('DB Error: Insertion failed.');
-        return monad_1.Right.of('Successfully inserted.');
+        return monad_1.Right.of(true);
     }
     catch (err) {
         return monad_1.Left.of(err);
