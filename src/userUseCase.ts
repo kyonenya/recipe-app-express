@@ -18,6 +18,16 @@ export const findByEmail = async (
   return await invokeFindByEmail(email);
 }
 
+export interface ICreateOne {
+  (user: User): Promise<boolean>; // TODO: Either<User>
+}
+export const createOne = async (
+  invokeCreateOne: ICreateOne,
+  user: User,
+) => {
+  return await invokeCreateOne(user);
+};
+
 export interface IUpdate {
   (user: User): Promise<boolean>;
 }

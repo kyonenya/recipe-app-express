@@ -4,6 +4,13 @@ import * as usersRepository from './usersRepository';
 import * as postgres from './postgres';
 import { Request, Response, NextFunction } from 'express';
 
+const entitizeRequest = (req: Request) => new User({
+  name: { firstName: req.body.first, lastName: req.body.last },
+  email: req.body.email,
+  zipcode: req.body.zipCode,
+  password: req.body.password,
+});
+
 export const showAllUsers = async (req: Request, res: Response) => {
   const users = await userUseCase.readAll(
     () => usersRepository.selectAll(postgres.execute)
@@ -20,14 +27,20 @@ export const showEditForm = async (req: Request, res: Response) => {
   res.render('users/edit', { user });
 };
 
+export const createUser = async (req: Request, res: Response) => {
+  const user = entitizeRequest(req);
+  console.log(user);
+  const result = await userUseCase.createOne(
+    usersRepository.insertOne(postgres.execute),
+    user,
+  );
+  console.log(result);
+  res.redirect('/users');
+};
+
 export const putUser = async (req: Request, res: Response) => {
   console.log(req.params);
-  const user = new User({
-    name: { firstName: req.body.first, lastName: req.body.last },
-    email: req.params.email,
-    zipcode: req.body.zipCode,
-    password: req.body.password,
-  });
+  const user = entitizeRequest(req);
   console.log('Controller', user);
   const result = await userUseCase.update(
     usersRepository.update(postgres.execute),

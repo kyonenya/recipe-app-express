@@ -35,6 +35,7 @@ app
   .get('/subscribers', asyncer(subscriberController.showAllSubscribers))
   .get('/users', asyncer(userController.showAllUsers))
   .get('/users/new', (req, res) => homeController.render('users/new', req, res))
+  .post('/users/create', asyncer(userController.createUser))
   .get('/users/:email/edit', asyncer(userController.showEditForm))
   .put('/users/:email/update', asyncer(userController.putUser))
   ;

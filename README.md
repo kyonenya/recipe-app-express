@@ -71,3 +71,8 @@ SET
   firstname = 'John'
   ,lastname =  'Smith'
 WHERE email = 'jon@jonwexler.com';
+
+INSERT INTO users 
+  (firstname, lastname, email, zipcode, password)
+VALUES
+  ('Takashi', 'Kyonenya', 'dummy@gmail.com', 0123456, 'passpass');

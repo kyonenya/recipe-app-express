@@ -28,11 +28,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.putUser = exports.showEditForm = exports.showAllUsers = void 0;
+exports.putUser = exports.createUser = exports.showEditForm = exports.showAllUsers = void 0;
 const userEntity_1 = require("./userEntity");
 const userUseCase = __importStar(require("./userUseCase"));
 const usersRepository = __importStar(require("./usersRepository"));
 const postgres = __importStar(require("./postgres"));
+const entitizeRequest = (req) => new userEntity_1.User({
+    name: { firstName: req.body.first, lastName: req.body.last },
+    email: req.body.email,
+    zipcode: req.body.zipCode,
+    password: req.body.password,
+});
 const showAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield userUseCase.readAll(() => usersRepository.selectAll(postgres.execute));
     res.render('users/index', { users });
@@ -44,14 +50,17 @@ const showEditForm = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     res.render('users/edit', { user });
 });
 exports.showEditForm = showEditForm;
+const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = entitizeRequest(req);
+    console.log(user);
+    const result = yield userUseCase.createOne(usersRepository.insertOne(postgres.execute), user);
+    console.log(result);
+    res.redirect('/users');
+});
+exports.createUser = createUser;
 const putUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.params);
-    const user = new userEntity_1.User({
-        name: { firstName: req.body.first, lastName: req.body.last },
-        email: req.params.email,
-        zipcode: req.body.zipCode,
-        password: req.body.password,
-    });
+    const user = entitizeRequest(req);
     console.log('Controller', user);
     const result = yield userUseCase.update(usersRepository.update(postgres.execute), user);
     res.redirect('/users');
