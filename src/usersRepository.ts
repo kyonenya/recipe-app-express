@@ -1,4 +1,5 @@
 import { User } from './userEntity';
+import { Either, Left, Right, ofEither } from './monad';
 import { IFindByEmail, IUpdate, ICreateOne } from './userUseCase';
 import { dbExecutable } from './repository';
 import { QueryResult } from 'pg';
@@ -44,10 +45,14 @@ export const insertOne = (dbExecutor: dbExecutable): ICreateOne => async (user: 
     ;
   `;
   const params = [user.name.firstName, user.name.lastName, user.email, user.zipcode, user.password];
-  console.log(params);
-  const queryResult = await dbExecutor(sql, params);
-  return queryResult.rowCount === 1; // TODO: Either<User>
-}
+  try {
+    const queryResult = await dbExecutor(sql, params);
+    if (queryResult.rowCount !== 1) return Left.of('DB Error: Insertion failed.');
+    return Right.of('Successfully inserted.');
+  } catch (err) {
+    return Left.of(err);
+  };
+};
 
 export const update = (dbExecutor: dbExecutable): IUpdate => async (user: User) => {
   const sql = `

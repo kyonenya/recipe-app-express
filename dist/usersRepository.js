@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.update = exports.insertOne = exports.selectByEmail = exports.selectAll = void 0;
 const userEntity_1 = require("./userEntity");
+const monad_1 = require("./monad");
 const entitize = (row) => {
     return new userEntity_1.User({
         name: {
@@ -45,9 +46,16 @@ const insertOne = (dbExecutor) => (user) => __awaiter(void 0, void 0, void 0, fu
     ;
   `;
     const params = [user.name.firstName, user.name.lastName, user.email, user.zipcode, user.password];
-    console.log(params);
-    const queryResult = yield dbExecutor(sql, params);
-    return queryResult.rowCount === 1; // TODO: Either<User>
+    try {
+        const queryResult = yield dbExecutor(sql, params);
+        if (queryResult.rowCount !== 1)
+            return monad_1.Left.of('DB Error: Insertion failed.');
+        return monad_1.Right.of('Successfully inserted.');
+    }
+    catch (err) {
+        return monad_1.Left.of(err);
+    }
+    ;
 });
 exports.insertOne = insertOne;
 const update = (dbExecutor) => (user) => __awaiter(void 0, void 0, void 0, function* () {

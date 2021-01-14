@@ -1,4 +1,5 @@
 import { User } from './userEntity';
+import { Either, Left, Right, ofEither } from './monad';
 import { dbExecutable } from './repository';
 import { QueryResult } from 'pg';
 
@@ -19,7 +20,7 @@ export const findByEmail = async (
 }
 
 export interface ICreateOne {
-  (user: User): Promise<boolean>; // TODO: Either<User>
+  (user: User): Promise<Either<unknown>>; // TODO: Either<User>
 }
 //export const createOne = async (
 //  invokeCreateOne: ICreateOne,

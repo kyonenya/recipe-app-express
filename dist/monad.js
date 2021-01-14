@@ -1,4 +1,6 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ofEither = exports.Right = exports.Left = void 0;
 class Left {
     constructor(_value) {
         this._value = _value;
@@ -8,6 +10,7 @@ class Left {
     }
     get value() { throw new TypeError('Can not extract the value of Left'); }
 }
+exports.Left = Left;
 Left.of = (val) => new Left(val);
 class Right {
     constructor(_value) {
@@ -19,7 +22,9 @@ class Right {
     get value() { return this._value; }
     ;
 }
+exports.Right = Right;
 Right.of = (val) => new Right(val);
 const ofEither = (a) => (a !== null && a !== undefined)
     ? new Right(a)
     : new Left(a);
+exports.ofEither = ofEither;

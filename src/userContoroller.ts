@@ -28,9 +28,11 @@ export const showEditForm = async (req: Request, res: Response) => {
 };
 
 export const createUser = async (req: Request, res: Response) => {
-  const user = entitizeRequest(req);
   const invokeCreateOne: userUseCase.ICreateOne = usersRepository.insertOne(postgres.execute);
-  const result = await invokeCreateOne(user);
+  // TODO: chain
+  const user = entitizeRequest(req);
+  const either = await invokeCreateOne(user);
+  either.map((x) => console.log(x));
   res.redirect('/users');
 };
 
