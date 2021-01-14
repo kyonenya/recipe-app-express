@@ -2,15 +2,15 @@
   <form class="form-signin" action="/users/create" method="POST">
     <h2 class="form-signin-heading">Create a new user:</h2>
     <label for="inputFirstName">First Name</label>
-    <input type="text" name="first" id="inputFirstName" class="form-control" placeholder="First" autofocus>
+    <input type="text" name="first" id="inputFirstName" class="form-control" placeholder="First" autofocus value="foo">
     <label for="inputLastName">Last Name</label>
-    <input type="text" name="last" id="inputLastName" class="form-control" placeholder="Last">
+    <input type="text" name="last" id="inputLastName" class="form-control" placeholder="Last" value="bar">
     <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required value="hogehoge">
     <label for="inputEmail">Email address</label>
-    <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required>
+    <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required value="dummy1@gmail.com">
     <label for="inputZipCode">Zip Code</label>
-    <input type="text" name="zipCode" id="inputZipCode" pattern="\d*" class="form-control" placeholder="Zip Code" required>
+    <input type="text" name="zipCode" id="inputZipCode" pattern="\d*" class="form-control" placeholder="Zip Code" required value="111111">
     <br /><button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
   </form>
 </div>

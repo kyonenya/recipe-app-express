@@ -52,9 +52,8 @@ const showEditForm = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.showEditForm = showEditForm;
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = entitizeRequest(req);
-    console.log(user);
-    const result = yield userUseCase.createOne(usersRepository.insertOne(postgres.execute), user);
-    console.log(result);
+    const invokeCreateOne = usersRepository.insertOne(postgres.execute);
+    const result = yield invokeCreateOne(user);
     res.redirect('/users');
 });
 exports.createUser = createUser;

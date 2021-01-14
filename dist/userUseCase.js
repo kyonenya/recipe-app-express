@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.update = exports.createOne = exports.findByEmail = exports.readAll = void 0;
+exports.update = exports.findByEmail = exports.readAll = void 0;
 const readAll = (execSelectAll) => __awaiter(void 0, void 0, void 0, function* () {
     return yield execSelectAll();
 });
@@ -18,10 +18,6 @@ const findByEmail = (invokeFindByEmail, email) => __awaiter(void 0, void 0, void
     return yield invokeFindByEmail(email);
 });
 exports.findByEmail = findByEmail;
-const createOne = (invokeCreateOne, user) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield invokeCreateOne(user);
-});
-exports.createOne = createOne;
 const update = (invokeUpdate, user) => __awaiter(void 0, void 0, void 0, function* () {
     return yield invokeUpdate(user);
 });
