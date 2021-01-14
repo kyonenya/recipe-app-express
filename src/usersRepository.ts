@@ -17,7 +17,7 @@ const entitize = (row: schemable): User => {
       lastName: row.lastname,
     },
     email: row.email,
-    zipcode: row.email,
+    zipcode: row.zipcode.toString(),
   });
 }
 

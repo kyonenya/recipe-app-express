@@ -14,7 +14,7 @@ const entitizeRequest = (req: Request) => new User({
 export const showAllUsers = async (req: Request, res: Response) => {
   const users = await userUseCase.readAll(
     () => usersRepository.selectAll(postgres.execute)
-  )
+  );
   res.render('users/index', { users });
 };
 

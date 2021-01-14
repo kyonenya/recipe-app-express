@@ -18,7 +18,7 @@ const entitize = (row) => {
             lastName: row.lastname,
         },
         email: row.email,
-        zipcode: row.email,
+        zipcode: row.zipcode.toString(),
     });
 };
 const selectAll = (dbExecutor) => __awaiter(void 0, void 0, void 0, function* () {
