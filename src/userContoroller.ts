@@ -28,17 +28,19 @@ export const showEditForm = async (req: Request, res: Response) => {
   res.render('users/edit', { user });
 };
 
-const awaiter = (fn: Function) => (thenable: Promise<unknown>) => {
-  return thenable.then(x => fn(x));
-}
+//const awaiter = (fn: Function) => (thenable: Promise<unknown>) => {
+//  return thenable.then(x => fn(x));
+//}
 
 export const createUser = async (req: Request, res: Response) => {
   const invokeCreateOne: (user: User) => Promise<Either<any>> = usersRepository.insertOne(postgres.execute);
   ofEither(req)
     .map(entitizeRequest)
     .map(invokeCreateOne)
-    .map(awaiter(<T>(x: T) => x))
-//    .map(awaiter((_: any) => res.redirect('/users')));
+    .map(<T>(x: T) => {
+      console.log(x);
+      return x;
+    })
     .map((_: any) => res.redirect('/users'));
 };
 

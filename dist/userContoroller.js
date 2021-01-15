@@ -51,16 +51,18 @@ const showEditForm = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     res.render('users/edit', { user });
 });
 exports.showEditForm = showEditForm;
-const awaiter = (fn) => (thenable) => {
-    return thenable.then(x => fn(x));
-};
+//const awaiter = (fn: Function) => (thenable: Promise<unknown>) => {
+//  return thenable.then(x => fn(x));
+//}
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const invokeCreateOne = usersRepository.insertOne(postgres.execute);
     monad_1.ofEither(req)
         .map(entitizeRequest)
         .map(invokeCreateOne)
-        .map(awaiter((x) => x))
-        //    .map(awaiter((_: any) => res.redirect('/users')));
+        .map((x) => {
+        console.log(x);
+        return x;
+    })
         .map((_) => res.redirect('/users'));
 });
 exports.createUser = createUser;
