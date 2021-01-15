@@ -1,22 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ofEither = exports.PromisedEither = exports.Right = exports.Left = void 0;
-//export interface IEither<T> {
-//  map: <U>(fn: f<T, U>) => Left<T>|Right<U>;
-//  getOrElse: <U>(other: U) => U|T;
-//  orElse: <U>(fn: f<T, U>) => U|Right<T>;
-//  value: void|T;
-//}
 class Left {
     constructor(_value) {
         this._value = _value;
         this.map = (_) => this;
-        this.asyncMap = (fn /*f<T, Promise<Either<U>>>*/) => new PromisedEither(Promise.resolve(this));
+        this.mapLeft = (fn) => new Left(fn(this._value));
+        this.asyncMap = (fn /*f<T, Promise<Either<U>>*/) => new PromisedEither(Promise.resolve(this));
         this.getOrElse = (other) => other;
-        this.orElse = (fn) => {
-            console.log('Left orElse');
-            return fn(this._value);
-        };
     }
     get value() { throw new TypeError('Can not extract the value of Left'); }
     ;
@@ -27,9 +18,9 @@ class Right {
     constructor(_value) {
         this._value = _value;
         this.map = (fn) => Right.of(fn(this._value));
-        this.asyncMap = (fn /*f<T,  Promise<Either<U>>>*/) => new PromisedEither(fn(this._value));
-        this.getOrElse = (_) => this.value;
-        this.orElse = (fn) => this;
+        this.mapLeft = (fn) => this;
+        this.asyncMap = (fn /*f<T, Promise<Either<U>>>*/) => new PromisedEither(fn(this._value));
+        this.getOrElse = (other) => this._value;
     }
     get value() { return this._value; }
     ;
@@ -37,21 +28,25 @@ class Right {
 exports.Right = Right;
 Right.of = (val) => new Right(val);
 class PromisedEither {
-    constructor(val) {
-        this.val = val;
+    constructor(_value) {
+        this._value = _value;
         this.map = (fn) => {
             return new PromisedEither(this._value.then(e => e.map(fn)));
         };
-        this.orElse = (fn) => {
-            const pp = new PromisedEither(this._value.then(e => {
-                if (e instanceof Right)
-                    return new PromisedEither(Promise.resolve(e));
-                return e.ofElse(fn);
-            }));
-            return pp.value;
+        this.mapLeft = (fn) => {
+            return new PromisedEither(this._value.then(e => (e instanceof Left)
+                ? e.mapLeft(fn)
+                : e // TODO e.mapLeft(fn) で統一する
+            // error TS2345: Argument of type 'f<L, T>' is not assignable to parameter of type 'f<R, T>'. Type 'R' is not assignable to type 'L'. 'L' could be instantiated with an arbitrary type which could be unrelated to 'R'.
+            ));
         };
-        this._value = val;
+        this.getOrElse = (other) => {
+            return this._value.then(e => (e instanceof Left)
+                ? other
+                : e.value);
+        };
     }
+    ;
     get value() { return this._value; }
 }
 exports.PromisedEither = PromisedEither;

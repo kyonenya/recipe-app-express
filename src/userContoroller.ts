@@ -28,14 +28,11 @@ export const showEditForm = async (req: Request, res: Response) => {
   res.render('users/edit', { user });
 };
 
-//const awaiter = (fn: Function) => (thenable: Promise<unknown>) => {
-//  return thenable.then(x => fn(x));
-//}
-
 export const createUser = async (req: Request, res: Response) => {
   const invokeCreateOne: (user: User) => Promise<Either<any>> = usersRepository.insertOne(postgres.execute);
 
   ofEither(req)
+//  ofEither(true)
     .map(entitizeRequest)
     .asyncMap(invokeCreateOne)
     .map((x: string) => {
@@ -43,7 +40,8 @@ export const createUser = async (req: Request, res: Response) => {
       return x;
     })
     .map((_: any) => res.redirect('/users'))
-    .orElse(console.error)
+    .mapLeft(console.error)
+//    .orElse(console.error)
     ;
 };
 
