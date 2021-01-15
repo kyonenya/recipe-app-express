@@ -51,19 +51,20 @@ const showEditForm = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     res.render('users/edit', { user });
 });
 exports.showEditForm = showEditForm;
+const awaiter = (fn) => (thenable) => {
+    return thenable.then(x => fn(x));
+};
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const invokeCreateOne = usersRepository.insertOne(postgres.execute);
     // TODO: resolve Promise in chain
     monad_1.Right.of(req)
         .map(entitizeRequest)
         .map(invokeCreateOne)
-        .map(x => {
-        x.then(x => console.log(x));
-        return x;
-    })
-        .map((x) => {
-        x.then((x) => res.redirect('/users'));
-    });
+        .map(awaiter((x) => x))
+        .map(awaiter((_) => res.redirect('/users')));
+    //    .map((x: any) => {
+    //      x.then((x: any) => res.redirect('/users'));
+    //    })
     //    .then((x) => {
     //      console.log(x);
     //      return x;
@@ -73,10 +74,6 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     //      return _;
     //    })
     //    .orElse(console.error);
-    //  const user = entitizeRequest(req);
-    //  const either = await invokeCreateOne(user);
-    //  either.map((x) => console.log(x));
-    //  res.redirect('/users');
 });
 exports.createUser = createUser;
 const putUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
