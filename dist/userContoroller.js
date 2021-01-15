@@ -56,14 +56,15 @@ exports.showEditForm = showEditForm;
 //}
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const invokeCreateOne = usersRepository.insertOne(postgres.execute);
-    monad_1.Right.of(req)
+    monad_1.ofEither(req)
         .map(entitizeRequest)
         .asyncMap(invokeCreateOne)
-        .map(x => {
-        console.log(x);
+        .map((x) => {
+        //      console.log(x);
         return x;
     })
-        .map((_) => res.redirect('/users'));
+        .map((_) => res.redirect('/users'))
+        .orElse(console.error);
 });
 exports.createUser = createUser;
 const putUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

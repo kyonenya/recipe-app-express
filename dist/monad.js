@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ofEither = exports.PromisedRight = exports.Right = exports.PromisedLeft = exports.Left = void 0;
+exports.ofEither = exports.PromisedEither = exports.PromisedRight = exports.Right = exports.PromisedLeft = exports.Left = void 0;
 class Left {
     constructor(_value) {
         this._value = _value;
         this.map = (_) => this; // => Left (skipped)
-        this.asyncMap = (fn) => new PromisedLeft(fn(this._value));
+        this.asyncMap = (fn /*f<T, Promise<Either<U>>>*/) => new PromisedEither(fn(this._value).then((v) => this)); // TODO: Promiseをfnに依らずに自分で生成する
         this.getOrElse = (other) => other;
-        this.orElse = (fn) => fn(this._value); // => U
+        this.orElse = (fn) => fn(this._value); // TODO: TypeDef
     }
     get value() { throw new TypeError('Can not extract the value of Left'); }
     ;
@@ -25,10 +25,10 @@ exports.PromisedLeft = PromisedLeft;
 class Right {
     constructor(_value) {
         this._value = _value;
-        this.map = (fn) => Right.of(fn(this._value)); // => Right<U>
-        this.asyncMap = (fn) => new PromisedRight(fn(this._value));
+        this.map = (fn) => Right.of(fn(this._value));
+        this.asyncMap = (fn /*f<T,  Promise<Either<U>>>*/) => new PromisedEither(fn(this._value));
         this.getOrElse = (_) => this.value;
-        this.orElse = (_) => this; // => Right (skipped)
+        this.orElse = (fn) => this; // TODO: TypeDef
     }
     get value() { return this._value; }
     ;
@@ -45,13 +45,18 @@ class PromisedRight {
     ;
 }
 exports.PromisedRight = PromisedRight;
-//  constructor(private _value: T) {}
-//  public map = <U>(fn: f<T, U>) => Right.of(fn(this._value)); // => Right<U>
-//  get value() { return this._value };
-//  public getOrElse = (_: unknown) => this.value;
-//  public orElse = (_: Function) => this; // => Right (skipped)
-//  static of = <T>(val: T): Right<T> => new Right(val);
-//}
+class PromisedEither {
+    constructor(_value) {
+        this._value = _value;
+        this.map = (fn) => {
+            return new PromisedEither(this._value.then(e => e.map(fn)));
+        };
+        this.orElse = (fn) => {
+            return new PromisedEither(this._value.then(e => e.orElse(fn)));
+        };
+    }
+}
+exports.PromisedEither = PromisedEither;
 const ofEither = (a) => (a !== null && a !== undefined)
     ? new Right(a)
     : new Left(a);
