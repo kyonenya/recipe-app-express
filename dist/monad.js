@@ -2,26 +2,19 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ofEither = exports.Right = exports.Left = void 0;
 class Left {
-    constructor(_value) {
-        this._value = _value;
+    constructor(value) {
         this.map = (_) => this; // => Left (skipped)
         this.getOrElse = (other) => other;
         this.orElse = (fn) => fn(this._value); // => U
+        this._value = value;
     }
-    //  public then = (_: Function) => {
-    //    if (!(this._value instanceof Promise)) {
-    //      return this;
-    //    }
-    //    return Left.of(this._value.then(x => x));
-    //  };
     get value() { throw new TypeError('Can not extract the value of Left'); }
     ;
 }
 exports.Left = Left;
 Left.of = (val) => new Left(val);
 class Right {
-    constructor(_value) {
-        this._value = _value;
+    constructor(value) {
         this.map = (fn) => {
             return Right.of(fn(this._value));
         }; // => Right<U>
@@ -33,6 +26,7 @@ class Right {
         };
         this.getOrElse = (_) => this.value;
         this.orElse = (_) => this; // => Right (skipped)
+        this._value = value;
     }
     get value() { return this._value; }
     ;

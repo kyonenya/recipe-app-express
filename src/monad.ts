@@ -11,14 +11,11 @@ export interface IEither<T> {
 }
 
 export class Left<T> implements IEither<T> {
-  constructor(private _value: T) {}
+  private _value;
+  constructor(value: T) {
+    this._value = value;
+  }
   public map = (_: Function) => this; // => Left (skipped)
-//  public then = (_: Function) => {
-//    if (!(this._value instanceof Promise)) {
-//      return this;
-//    }
-//    return Left.of(this._value.then(x => x));
-//  };
   get value() { throw new TypeError('Can not extract the value of Left') };
   public getOrElse = <U>(other: U) => other;
   public orElse = <U>(fn: f<T, U>)=> fn(this._value); // => U
@@ -26,7 +23,10 @@ export class Left<T> implements IEither<T> {
 }
 
 export class Right<T> implements IEither<T> {
-  constructor(private _value: T) {}
+  private _value;
+  constructor(value: T) {
+    this._value = value;
+  }
   public map = <U>(fn: f<T, U>) => {
     return Right.of(fn(this._value));
   }; // => Right<U>
