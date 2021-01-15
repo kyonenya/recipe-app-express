@@ -29,13 +29,19 @@ export const showEditForm = async (req: Request, res: Response) => {
 };
 
 export const createUser = async (req: Request, res: Response) => {
-  const invokeCreateOne = usersRepository.insertOne(postgres.execute);
+  const invokeCreateOne: (user: User) => Promise<Either<any>> = usersRepository.insertOne(postgres.execute);
   // TODO: resolve Promise in chain
   Right.of(req)
     .map(entitizeRequest)
     .map(invokeCreateOne)
-    .then(console.log)
-    .then((_: unknown) => res.redirect('/users'))
+    .then((x) => {
+      console.log(x);
+      return x;
+    })
+    .then((_: any) => {
+      res.redirect('/users');
+      return _;
+    })
     .orElse(console.error);
 
 //  const user = entitizeRequest(req);

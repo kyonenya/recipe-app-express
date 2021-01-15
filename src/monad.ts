@@ -30,7 +30,7 @@ export class Right<T> implements IEither<T> {
   public map = <U>(fn: f<T, U>) => {
     return Right.of(fn(this._value));
   }; // => Right<U>
-  public then = <U>(fn: f<T, U>) => {
+  public then = <U>(fn: f<T, U>): Right<Promise<U>|U> => {
     if (!(this._value instanceof Promise)) {
       return this.map(fn);
     }
