@@ -4,13 +4,17 @@ export type Either<T> = Left<T>|Right<T>;
 
 export interface IEither<T> {
   map: <U>(fn: f<T, U>) => Left<T>|Right<U>;
+//  then: <U>(fn: f<T, U>) => Left<T>|Right<U>;
   getOrElse: <U>(other: U) => U|T;
   orElse: <U>(fn: f<T, U>) => U|Right<T>;
   value: void|T;
 }
 
 export class Left<T> implements IEither<T> {
-  constructor(private _value: T) {}
+  private _value;
+  constructor(value: T) {
+    this._value = value;
+  }
   public map = (_: Function) => this; // => Left (skipped)
   get value() { throw new TypeError('Can not extract the value of Left') };
   public getOrElse = <U>(other: U) => other;
@@ -19,8 +23,22 @@ export class Left<T> implements IEither<T> {
 }
 
 export class Right<T> implements IEither<T> {
-  constructor(private _value: T) {}
-  public map = <U>(fn: f<T, U>) => Right.of(fn(this._value)); // => Right<U>
+  private _value;
+  constructor(value: T) {
+    this._value = value;
+  }
+  public map = <U>(fn: f<T, U>) => {
+    if (this._value instanceof Promise) {
+      Right.of(this._value.then(fn));
+    }
+    return Right.of(fn(this._value));
+  }; // => Right<U>
+  public then = <U>(fn: f<T, U>): Right<Promise<U>|U> => {
+    if (!(this._value instanceof Promise)) {
+      return this.map(fn);
+    }
+    return Right.of(this._value.then(fn));
+  };
   get value() { return this._value };
   public getOrElse = (_: unknown) => this.value;
   public orElse = (_: Function) => this; // => Right (skipped)
