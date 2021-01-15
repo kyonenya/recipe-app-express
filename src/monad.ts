@@ -12,7 +12,7 @@ export interface IEither<T> {
 export class Left<T> implements IEither<T> {
   constructor(private _value: T) {}
   public map = (_: Function) => this; // => Left (skipped)
-  public asyncMap = <U>(fn: any/*f<T, Promise<Either<U>>>*/): any => new PromisedEither(fn(this._value).then((v: any) => this)); // TODO: Promiseをfnに依らずに自分で生成する
+  public asyncMap = <U>(fn: any/*f<T, Promise<Either<U>>>*/): any => new PromisedEither(Promise.resolve(this));
   get value() { throw new TypeError('Can not extract the value of Left') };
   public getOrElse = <U>(other: U) => other;
   public orElse = <U>(fn: f<T, U>): any => fn(this._value); // TODO: TypeDef

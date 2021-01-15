@@ -5,7 +5,7 @@ class Left {
     constructor(_value) {
         this._value = _value;
         this.map = (_) => this; // => Left (skipped)
-        this.asyncMap = (fn /*f<T, Promise<Either<U>>>*/) => new PromisedEither(fn(this._value).then((v) => this)); // TODO: Promiseをfnに依らずに自分で生成する
+        this.asyncMap = (fn /*f<T, Promise<Either<U>>>*/) => new PromisedEither(Promise.resolve(this));
         this.getOrElse = (other) => other;
         this.orElse = (fn) => fn(this._value); // TODO: TypeDef
     }
