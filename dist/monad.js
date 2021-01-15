@@ -8,7 +8,14 @@ class Left {
         this.getOrElse = (other) => other;
         this.orElse = (fn) => fn(this._value); // => U
     }
+    //  public then = (_: Function) => {
+    //    if (!(this._value instanceof Promise)) {
+    //      return this;
+    //    }
+    //    return Left.of(this._value.then(x => x));
+    //  };
     get value() { throw new TypeError('Can not extract the value of Left'); }
+    ;
 }
 exports.Left = Left;
 Left.of = (val) => new Left(val);

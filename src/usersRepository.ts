@@ -36,7 +36,7 @@ export const selectByEmail = (dbExecutor: dbExecutable): IFindByEmail => async (
   return entitize(queryResult.rows[0]);
 }
 
-export const insertOne = (dbExecutor: dbExecutable) => async (user: User): Promise<Either<any>|boolean> => { // TODO: Eitherが型エラーになる
+export const insertOne = (dbExecutor: dbExecutable) => async (user: User): Promise<Either<any>> => {
   const sql = `
     INSERT INTO users 
       (firstname, lastname, email, zipcode, password)
@@ -48,7 +48,7 @@ export const insertOne = (dbExecutor: dbExecutable) => async (user: User): Promi
   try {
     const queryResult = await dbExecutor(sql, params);
     if (queryResult.rowCount !== 1) return Left.of('DB Error: Insertion failed.');
-    return Right.of(true) as Right<boolean>; // TODO: Right<boolean>がただのboolean型だと判定されてしまう
+    return Right.of(true) as Right<boolean>;
   } catch (err) {
     return Left.of(err);
   };
