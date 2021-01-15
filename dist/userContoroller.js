@@ -60,7 +60,8 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         .map(entitizeRequest)
         .map(invokeCreateOne)
         .map(awaiter((x) => x))
-        .map(awaiter((_) => res.redirect('/users')));
+        //    .map(awaiter((_: any) => res.redirect('/users')));
+        .map((_) => res.redirect('/users'));
 });
 exports.createUser = createUser;
 const putUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

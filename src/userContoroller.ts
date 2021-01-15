@@ -38,7 +38,8 @@ export const createUser = async (req: Request, res: Response) => {
     .map(entitizeRequest)
     .map(invokeCreateOne)
     .map(awaiter(<T>(x: T) => x))
-    .map(awaiter((_: any) => res.redirect('/users')));
+//    .map(awaiter((_: any) => res.redirect('/users')));
+    .map((_: any) => res.redirect('/users'));
 };
 
 export const putUser = async (req: Request, res: Response) => {

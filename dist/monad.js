@@ -16,6 +16,9 @@ Left.of = (val) => new Left(val);
 class Right {
     constructor(value) {
         this.map = (fn) => {
+            if (this._value instanceof Promise) {
+                Right.of(this._value.then(fn));
+            }
             return Right.of(fn(this._value));
         }; // => Right<U>
         this.then = (fn) => {
