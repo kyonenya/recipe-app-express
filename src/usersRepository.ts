@@ -54,7 +54,7 @@ export const insertOne = (dbExecutor: dbExecutable) => async (user: User): Promi
   };
 };
 
-export const update = (dbExecutor: dbExecutable): IUpdate => async (user: User) => {
+export const update = (dbExecutor: dbExecutable) => async (user: User) => {
   const sql = `
     UPDATE users
     SET
@@ -65,9 +65,12 @@ export const update = (dbExecutor: dbExecutable): IUpdate => async (user: User) 
     WHERE email = $1;
   `;
   const params = [user.email, user.name.firstName, user.name.lastName, user.zipcode, user.password];
-  const queryResult = await dbExecutor(sql, params);
-  console.log(user);
-  console.log(params);
-  console.log(queryResult);
-  return queryResult.rowCount === 1;
+  try {
+    const queryResult = await dbExecutor(sql, params);
+    return queryResult.rowCount === 1
+      ? Right.of(true)
+      : Left.of('DB Error: 0 item updated');
+  } catch (err) {
+    return Left.of(err);
+  };
 };

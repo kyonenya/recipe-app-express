@@ -69,10 +69,15 @@ const update = (dbExecutor) => (user) => __awaiter(void 0, void 0, void 0, funct
     WHERE email = $1;
   `;
     const params = [user.email, user.name.firstName, user.name.lastName, user.zipcode, user.password];
-    const queryResult = yield dbExecutor(sql, params);
-    console.log(user);
-    console.log(params);
-    console.log(queryResult);
-    return queryResult.rowCount === 1;
+    try {
+        const queryResult = yield dbExecutor(sql, params);
+        return queryResult.rowCount === 1
+            ? monad_1.Right.of(true)
+            : monad_1.Left.of('DB Error: 0 item updated');
+    }
+    catch (err) {
+        return monad_1.Left.of(err);
+    }
+    ;
 });
 exports.update = update;

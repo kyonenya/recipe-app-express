@@ -46,12 +46,13 @@ export const createUser = async (req: Request, res: Response) => {
 };
 
 export const putUser = async (req: Request, res: Response) => {
-  console.log(req.params);
-  const user = entitizeRequest(req);
-  console.log('Controller', user);
-  const result = await userUseCase.update(
-    usersRepository.update(postgres.execute),
-    user,
-  );
-  res.redirect('/users');
+  const invokeUpdateOne: (user: User) => Promise<Either<any>> = usersRepository.update(postgres.execute);
+
+  ofEither(req)
+    .map(entitizeRequest)
+    .asyncMap(invokeUpdateOne)
+    .mapLeft(tap(console.error))
+    .map(tap(console.log))
+    .map(tap(_ => res.redirect('/users')))
+    ;
 };

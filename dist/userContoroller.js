@@ -66,10 +66,12 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.createUser = createUser;
 const putUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.params);
-    const user = entitizeRequest(req);
-    console.log('Controller', user);
-    const result = yield userUseCase.update(usersRepository.update(postgres.execute), user);
-    res.redirect('/users');
+    const invokeUpdateOne = usersRepository.update(postgres.execute);
+    monad_1.ofEither(req)
+        .map(entitizeRequest)
+        .asyncMap(invokeUpdateOne)
+        .mapLeft(tap(console.error))
+        .map(tap(console.log))
+        .map(tap(_ => res.redirect('/users')));
 });
 exports.putUser = putUser;
