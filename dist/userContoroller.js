@@ -53,13 +53,13 @@ const showEditForm = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.showEditForm = showEditForm;
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const invokeCreateOne = usersRepository.insertOne(postgres.execute);
-    // TODO: chain
+    // TODO: resolve Promise in chain
     monad_1.Right.of(req)
         .map(entitizeRequest)
-        .map(yield (invokeCreateOne))
-        .map(yield (console.log))
-        .map(yield (_ => res.redirect('/users')))
-        .orElse(yield (console.error));
+        .map(invokeCreateOne)
+        .then(console.log)
+        .then((_) => res.redirect('/users'))
+        .orElse(console.error);
     //  const user = entitizeRequest(req);
     //  const either = await invokeCreateOne(user);
     //  either.map((x) => console.log(x));

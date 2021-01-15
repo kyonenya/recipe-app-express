@@ -19,9 +19,9 @@ export const findByEmail = async (
   return await invokeFindByEmail(email);
 }
 
-export interface ICreateOne {
-  (user: User): Promise<Either<unknown>>; // TODO: Either<User>
-}
+//export interface ICreateOne {
+//  (user: User): Promise<Either<any>>; // TODO: Either<User>
+//}
 //export const createOne = async (
 //  invokeCreateOne: ICreateOne,
 //  user: User,

@@ -15,7 +15,15 @@ Left.of = (val) => new Left(val);
 class Right {
     constructor(_value) {
         this._value = _value;
-        this.map = (fn) => Right.of(fn(this._value)); // => Right<U>
+        this.map = (fn) => {
+            return Right.of(fn(this._value));
+        }; // => Right<U>
+        this.then = (fn) => {
+            if (!(this._value instanceof Promise)) {
+                return this.map(fn);
+            }
+            return Right.of(this._value.then(fn));
+        };
         this.getOrElse = (_) => this.value;
         this.orElse = (_) => this; // => Right (skipped)
     }

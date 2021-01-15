@@ -1,6 +1,6 @@
 import { User } from './userEntity';
 import { Either, Left, Right, ofEither } from './monad';
-import { IFindByEmail, IUpdate, ICreateOne } from './userUseCase';
+import { IFindByEmail, IUpdate } from './userUseCase';
 import { dbExecutable } from './repository';
 import { QueryResult } from 'pg';
 
@@ -36,7 +36,7 @@ export const selectByEmail = (dbExecutor: dbExecutable): IFindByEmail => async (
   return entitize(queryResult.rows[0]);
 }
 
-export const insertOne = (dbExecutor: dbExecutable): ICreateOne => async (user: User) => {
+export const insertOne = (dbExecutor: dbExecutable) => async (user: User): Promise<Either<any>|boolean> => { // TODO: Eitherが型エラーになる
   const sql = `
     INSERT INTO users 
       (firstname, lastname, email, zipcode, password)
@@ -48,7 +48,7 @@ export const insertOne = (dbExecutor: dbExecutable): ICreateOne => async (user: 
   try {
     const queryResult = await dbExecutor(sql, params);
     if (queryResult.rowCount !== 1) return Left.of('DB Error: Insertion failed.');
-    return Right.of(true);
+    return Right.of(true) as Right<boolean>; // TODO: Right<boolean>がただのboolean型だと判定されてしまう
   } catch (err) {
     return Left.of(err);
   };
