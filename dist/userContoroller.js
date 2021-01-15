@@ -56,24 +56,11 @@ const awaiter = (fn) => (thenable) => {
 };
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const invokeCreateOne = usersRepository.insertOne(postgres.execute);
-    // TODO: resolve Promise in chain
-    monad_1.Right.of(req)
+    monad_1.ofEither(req)
         .map(entitizeRequest)
         .map(invokeCreateOne)
         .map(awaiter((x) => x))
         .map(awaiter((_) => res.redirect('/users')));
-    //    .map((x: any) => {
-    //      x.then((x: any) => res.redirect('/users'));
-    //    })
-    //    .then((x) => {
-    //      console.log(x);
-    //      return x;
-    //    })
-    //    .then((_: any) => {
-    //      res.redirect('/users');
-    //      return _;
-    //    })
-    //    .orElse(console.error);
 });
 exports.createUser = createUser;
 const putUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
