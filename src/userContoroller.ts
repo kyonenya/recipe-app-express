@@ -34,10 +34,11 @@ export const showEditForm = async (req: Request, res: Response) => {
 
 export const createUser = async (req: Request, res: Response) => {
   const invokeCreateOne: (user: User) => Promise<Either<any>> = usersRepository.insertOne(postgres.execute);
-  ofEither(req)
+
+  Right.of(req)
     .map(entitizeRequest)
-    .map(invokeCreateOne)
-    .map(<T>(x: T) => {
+    .asyncMap(invokeCreateOne)
+    .map(x => {
       console.log(x);
       return x;
     })

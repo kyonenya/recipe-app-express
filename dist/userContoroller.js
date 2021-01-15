@@ -56,10 +56,10 @@ exports.showEditForm = showEditForm;
 //}
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const invokeCreateOne = usersRepository.insertOne(postgres.execute);
-    monad_1.ofEither(req)
+    monad_1.Right.of(req)
         .map(entitizeRequest)
-        .map(invokeCreateOne)
-        .map((x) => {
+        .asyncMap(invokeCreateOne)
+        .map(x => {
         console.log(x);
         return x;
     })
