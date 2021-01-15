@@ -60,7 +60,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         .map(entitizeRequest)
         .asyncMap(invokeCreateOne)
         .map((x) => {
-        //      console.log(x);
+        console.log('Right');
         return x;
     })
         .map((_) => res.redirect('/users'))

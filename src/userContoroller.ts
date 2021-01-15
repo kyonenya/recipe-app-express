@@ -39,7 +39,7 @@ export const createUser = async (req: Request, res: Response) => {
     .map(entitizeRequest)
     .asyncMap(invokeCreateOne)
     .map((x: string) => {
-//      console.log(x);
+      console.log('Right');
       return x;
     })
     .map((_: any) => res.redirect('/users'))
