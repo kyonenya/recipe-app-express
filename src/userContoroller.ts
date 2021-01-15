@@ -34,20 +34,22 @@ export const createUser = async (req: Request, res: Response) => {
   Right.of(req)
     .map(entitizeRequest)
     .map(invokeCreateOne)
-    .then((x) => {
-      console.log(x);
+    .map(x => {
+      x.then(x => console.log(x));
       return x;
     })
-    .then((_: any) => {
-      res.redirect('/users');
-      return _;
+    .map((x: any) => {
+      x.then((x: any) => res.redirect('/users'));
     })
-    .orElse(console.error);
-
-//  const user = entitizeRequest(req);
-//  const either = await invokeCreateOne(user);
-//  either.map((x) => console.log(x));
-//  res.redirect('/users');
+//    .then((x) => {
+//      console.log(x);
+//      return x;
+//    })
+//    .then((_: any) => {
+//      res.redirect('/users');
+//      return _;
+//    })
+//    .orElse(console.error);
 };
 
 export const putUser = async (req: Request, res: Response) => {

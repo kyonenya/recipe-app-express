@@ -57,15 +57,22 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     monad_1.Right.of(req)
         .map(entitizeRequest)
         .map(invokeCreateOne)
-        .then((x) => {
-        console.log(x);
+        .map(x => {
+        x.then(x => console.log(x));
         return x;
     })
-        .then((_) => {
-        res.redirect('/users');
-        return _;
-    })
-        .orElse(console.error);
+        .map((x) => {
+        x.then((x) => res.redirect('/users'));
+    });
+    //    .then((x) => {
+    //      console.log(x);
+    //      return x;
+    //    })
+    //    .then((_: any) => {
+    //      res.redirect('/users');
+    //      return _;
+    //    })
+    //    .orElse(console.error);
     //  const user = entitizeRequest(req);
     //  const either = await invokeCreateOne(user);
     //  either.map((x) => console.log(x));
