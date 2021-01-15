@@ -34,6 +34,10 @@ const monad_1 = require("./monad");
 const userUseCase = __importStar(require("./userUseCase"));
 const usersRepository = __importStar(require("./usersRepository"));
 const postgres = __importStar(require("./postgres"));
+const tap = (fn) => (x) => {
+    fn(x);
+    return x;
+};
 const entitizeRequest = (req) => new userEntity_1.User({
     name: { firstName: req.body.first, lastName: req.body.last },
     email: req.body.email,
@@ -54,14 +58,10 @@ exports.showEditForm = showEditForm;
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const invokeCreateOne = usersRepository.insertOne(postgres.execute);
     monad_1.ofEither(req)
-        //  ofEither(true)
         .map(entitizeRequest)
         .asyncMap(invokeCreateOne)
-        .map((x) => {
-        console.log('Right');
-        return x;
-    })
-        .map((_) => res.redirect('/users'))
+        .map(tap(console.log))
+        .map(tap((_) => res.redirect('/users')))
         .mapLeft(console.error);
 });
 exports.createUser = createUser;

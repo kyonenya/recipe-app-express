@@ -5,6 +5,11 @@ import * as usersRepository from './usersRepository';
 import * as postgres from './postgres';
 import { Request, Response, NextFunction } from 'express';
 
+const tap = <T>(fn: (x: T) => void) => (x: T) => {
+  fn(x);
+  return x;
+};
+
 const entitizeRequest = (req: Request) => new User({
   name: { firstName: req.body.first, lastName: req.body.last },
   email: req.body.email,
@@ -32,16 +37,11 @@ export const createUser = async (req: Request, res: Response) => {
   const invokeCreateOne: (user: User) => Promise<Either<any>> = usersRepository.insertOne(postgres.execute);
 
   ofEither(req)
-//  ofEither(true)
     .map(entitizeRequest)
     .asyncMap(invokeCreateOne)
-    .map((x: string) => {
-      console.log('Right');
-      return x;
-    })
-    .map((_: any) => res.redirect('/users'))
+    .map(tap(console.log))
+    .map(tap((_) => res.redirect('/users')))
     .mapLeft(console.error)
-//    .orElse(console.error)
     ;
 };
 
